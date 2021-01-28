@@ -51,7 +51,7 @@ public final class Constants {
 
 	//Sensor number constants
 	public static int intakeSensorNumber = 1;
-	public static int conveyorSensorNumber = -1;
+	public static int conveyorSensorNumber = -1; // this was -1
 	public static int shooterSensorNumber = -1;
 	public static int colorSensorNumber = -1;
 	
