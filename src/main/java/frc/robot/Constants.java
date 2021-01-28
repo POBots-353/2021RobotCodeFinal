@@ -32,11 +32,11 @@ public final class Constants {
 	public static int rightFrontMotorDeviceID = 1;
 	public static int rightRearMotorDeviceID = 3;
 	public static int intakeMotorDeviceID = 6;
-	public static int conveyorMotorDeviceID = 8;
-	public static int shooterMotorDeviceID = 10;
+	public static int conveyorMotorDeviceID = 7; //swap
+	public static int shooterMotorDeviceID = 8;
 	public static int climberMotorDeviceID = 5;
 	public static int colorWheelDeviceID = -1;
-	public static int hoodMotorDeviceID = 7;
+	public static int hoodMotorDeviceID = 10; //swap
 	public static int preShooterDeviceID = 9; //new 
 
 	//CANSParkMax Motor Speeds
