@@ -26,7 +26,7 @@ public class ClimberSubsystem extends SubsystemBase {
 
 
 
-  //* Creates a CANSparkMax varible climberMotor that is a MotorType kBrushless *
+  //* Creates a CANSparkMax variable climberMotor that is a MotorType kBrushless *
   //*** This is a constructor of the CANSparkMax class and takes two parameters CANSparkMax(int, int) being the port number and the motor type ***
   public CANSparkMax climberMotor = new CANSparkMax(Constants.climberMotorDeviceID,MotorType.kBrushless);
 

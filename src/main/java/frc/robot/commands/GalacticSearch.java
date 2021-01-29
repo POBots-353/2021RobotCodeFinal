@@ -11,7 +11,7 @@ public class GalacticSearch extends CommandBase{
 
     public GalacticSearch(DriveSubsystem subsystem){
         driveSubsystem = subsystem;    
-        // Use addRequirements() here to declare subsystem dependencies.
+        //Use addRequirements() here to declare subsystem dependencies.
         addRequirements(driveSubsystem);
       }
 

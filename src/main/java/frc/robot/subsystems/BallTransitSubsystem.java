@@ -4,7 +4,7 @@
 /* must be accompanied by the FIRST BSD license file in the root directory of */
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
-//LOFT PUSH
+
 package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkMax;
@@ -27,7 +27,7 @@ public class BallTransitSubsystem extends SubsystemBase {
   
   public DigitalInput shooterSensor = new DigitalInput(Constants.shooterLimitSwitch);
   public DigitalInput intakeSensor = new DigitalInput(Constants.intakeSensorNumber);
-  //public DigitalInput conveyorSensor = new DigitalInput(Constants.conveyorSensorNumber);
+  //public DigitalInput conveyorSensor = new DigitalInput(Constants.conveyorSensorNumber); removed conveyorSensor, not sure if it will work
 
   public boolean intakeIn;
   public boolean intakeOut;
@@ -82,7 +82,7 @@ public class BallTransitSubsystem extends SubsystemBase {
   }
 
   public void runIntake(boolean intakeBtn,  boolean outtakeBtn){
-    if (intakeBtn == true /* && conveyorSensor.get() == false*/){
+    if (intakeBtn == true  /*&& conveyorSensor.get() == false*/){
       intakeMotor.set(Constants.intakeMotorSpeed);
       if(true){  //if(intakeSensor.get() == true){ // Removed for limit switch concerns on 2/29 ~CR
         intakeIn = true;

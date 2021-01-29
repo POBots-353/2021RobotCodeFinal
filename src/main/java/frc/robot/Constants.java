@@ -32,19 +32,17 @@ public final class Constants {
 	public static int rightFrontMotorDeviceID = 1;
 	public static int rightRearMotorDeviceID = 3;
 	public static int intakeMotorDeviceID = 6;
-	public static int conveyorMotorDeviceID = 7; //swap
+	public static int conveyorMotorDeviceID = 7; 
 	public static int shooterMotorDeviceID = 8;
 	public static int climberMotorDeviceID = 5;
-	public static int colorWheelDeviceID = -1;
-	public static int hoodMotorDeviceID = 10; //swap
+	public static int hoodMotorDeviceID = 10; 
 	public static int preShooterDeviceID = 9; //new 
 
-	//CANSParkMax Motor Speeds
+	//CANSparkMax Motor Speeds
 	public static double intakeMotorSpeed = 0.5;
 	public static double conveyorMotorSpeed = 0.15;
 	public static double shooterMotorSpeed = 0.9;
 	public static double climberMotorSpeed = 0.3;
-	public static double colorWheelMotorSpeed = 0.1;
 	public static double preShooterMotorSpeed = .10 ;   //not actual speed, just placeholder 
 	//Spike Relay Number constants
 	//public static int intakeSpikeNumber = 1;
@@ -53,7 +51,6 @@ public final class Constants {
 	public static int intakeSensorNumber = 1;
 	public static int conveyorSensorNumber = -1; // this was -1
 	public static int shooterSensorNumber = -1;
-	public static int colorSensorNumber = -1;
 	
 	//Driver button constants
 	public static int turboButtonNumber = 2;
@@ -71,8 +68,6 @@ public final class Constants {
 	public static int dropIntakeButtonNumber = 16;
 	public static int hoodToggleBtnNum = 2;
 	public static int hoodRunBtnNum = 3;
-	public static int AutoColorButtonNumber = -1;
-	public static int manualColorButtonNumber = -1;
 ;
 
 	//Constants for angular and linear alignment within AlignRobotCommand()
