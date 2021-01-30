@@ -43,12 +43,12 @@ public class BallTransitSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-     boolean intakeBtn = RobotContainer.driverStick.getRawButtonPressed(Constants.intakeButtonNumber);
-     boolean outtakeBtn = RobotContainer.driverStick.getRawButtonPressed(Constants.outtakeButtonNumber);
-     boolean conveyorUpBtn = RobotContainer.operatorStick.getRawButton(Constants.conveyorUpButtonNumber);
-     boolean conveyorDownBtn = RobotContainer.operatorStick.getRawButton(Constants.conveyorUpButtonNumber);
+     boolean intakeBtn = RobotContainer.operatorStick.getRawButtonPressed(Constants.intakeButtonNumber); // was driverStick
+     boolean outtakeBtn = RobotContainer.operatorStick.getRawButton(Constants.outtakeButtonNumber); // was driverStick
+     boolean conveyorUpBtn = RobotContainer.operatorStick.getRawButton(Constants.conveyorUpButtonNumber); //getRawButton
+     boolean conveyorDownBtn = RobotContainer.operatorStick.getRawButton(Constants.conveyorUpButtonNumber); //getRawButton
      boolean shootBtn = RobotContainer.operatorStick.getRawButtonPressed(Constants.shootButtonNumber);
-
+     
     if(intakeBtn||outtakeBtn){
       runIntake(intakeBtn,outtakeBtn);
     }

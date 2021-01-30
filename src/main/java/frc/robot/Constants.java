@@ -59,15 +59,15 @@ public final class Constants {
 	public static int magicTurnButtonNumber = 4;
 
 	//Operator button constants
-	public static int shootButtonNumber = 1;
-	public static int intakeButtonNumber = 7;
-	public static int outtakeButtonNumber = 8;
-	public static int conveyorUpButtonNumber = 6;
-	public static int conveyorDownButtonNumber = 9;
+	public static int shootButtonNumber = 16;
+	public static int intakeButtonNumber = 13;
+	public static int outtakeButtonNumber = 14;
+	public static int conveyorUpButtonNumber = 12;
+	public static int conveyorDownButtonNumber = 15;
 	public static int climberUpButtonNumber = 4;			
-	public static int dropIntakeButtonNumber = 16;
-	public static int hoodToggleBtnNum = 2;
-	public static int hoodRunBtnNum = 3;
+	//public static int dropIntakeButtonNumber = 16; got rid of
+	public static int hoodToggleBtnNum = 5;
+	public static int hoodRunBtnNum = 10;
 ;
 
 	//Constants for angular and linear alignment within AlignRobotCommand()
