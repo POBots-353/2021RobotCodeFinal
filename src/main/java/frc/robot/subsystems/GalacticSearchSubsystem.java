@@ -13,6 +13,7 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 
 import frc.robot.Constants;
@@ -60,7 +61,24 @@ public class GalacticSearchSubsystem extends SubsystemBase {
     drive.setSafetyEnabled(true);
   }
 
+  public void pathRedA(){
 
+  }
+  public void pathBlueA(){
+
+  }
+  public void pathRedB(){
+
+  }
+  public void pathBlueB(){
+
+  }
+  public boolean deciderA(AnalogInput distance){ //disable during path B
+    return false;//placeholder
+  }
+  public boolean deciderB(AnalogInput distance){ //disable during path A
+    return false;//placeholder
+  }
 
   //* Creates a method periodic() that will be called once per scheduler run *
   //*** This allows us to repeate sections of code and acts similar in nature to a loop ***

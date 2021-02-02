@@ -1,18 +1,18 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.DriveSubsystem;
+import frc.robot.subsystems.GalacticSearchSubsystem;
 import edu.wpi.first.wpilibj.AnalogInput;
 
 
-public class GalacticSearch extends CommandBase{
-    private final DriveSubsystem driveSubsystem;
+public class GalacticSearchCommand extends CommandBase{
+    private final GalacticSearchSubsystem galacticSubsystem;
     public int t = 0;
 
-    public GalacticSearch(DriveSubsystem subsystem){
-        driveSubsystem = subsystem;    
+    public GalacticSearchCommand(GalacticSearchSubsystem subsystem){
+        galacticSubsystem = subsystem;    
         //Use addRequirements() here to declare subsystem dependencies.
-        addRequirements(driveSubsystem);
+        addRequirements(galacticSubsystem);
       }
 
   // Called when the command is initially scheduled.
