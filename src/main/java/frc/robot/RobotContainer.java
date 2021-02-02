@@ -21,6 +21,7 @@ import frc.robot.commands.ManualDriveCommand;
 import frc.robot.subsystems.BallTransitSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.HoodSubsystem;
+import frc.robot.subsystems.GalacticSearchSubsystem;
 //import frc.robot.subsystems.OperatorIntakeSystem;
 //import frc.robot.subsystems.DropIntakeSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -38,6 +39,7 @@ public class RobotContainer {
   public final static DriveSubsystem driveSubsystem = new DriveSubsystem();
   public final static BallTransitSubsystem transitSubsystem = new BallTransitSubsystem();
   public final static HoodSubsystem hood = new HoodSubsystem();
+  public final static GalacticSearchSubsystem galactic = new GalacticSearchSubsystem();
   //public final static ColorWheelSubsytem colorWheelSubsystem =  new ColorWheelSubsytem();
  
   // The robot's joysticks are defined here

@@ -35,7 +35,6 @@ public class BallTransitSubsystem extends SubsystemBase {
   public int countTime;
   public boolean shooterReverse;
 
-
   public BallTransitSubsystem() {
 
   }
@@ -48,7 +47,7 @@ public class BallTransitSubsystem extends SubsystemBase {
      boolean conveyorUpBtn = RobotContainer.operatorStick.getRawButton(Constants.conveyorUpButtonNumber); //getRawButton
      boolean conveyorDownBtn = RobotContainer.operatorStick.getRawButton(Constants.conveyorUpButtonNumber); //getRawButton
      boolean shootBtn = RobotContainer.operatorStick.getRawButtonPressed(Constants.shootButtonNumber);
-     
+
     if(intakeBtn||outtakeBtn){
       runIntake(intakeBtn,outtakeBtn);
     }
@@ -123,7 +122,7 @@ public class BallTransitSubsystem extends SubsystemBase {
     else{
       shooterRunning = false;
       shooterMotor.set(0);
-       preShooterMotor.set(0);
+      preShooterMotor.set(0);
       countTime = 0;
       shooterReverse = false;
     }
