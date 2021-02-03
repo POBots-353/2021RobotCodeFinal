@@ -51,7 +51,9 @@ public final class Constants {
 	public static int intakeSensorNumber = 1;
 	public static int conveyorSensorNumber = -1; // this was -1
 	public static int shooterSensorNumber = -1;
-	
+	public static int ultrasonicWideSensorNumber = 0;
+	public static int ultrasonicNarrowSensorNumber = 2;
+
 	//Driver button constants
 	public static int turboButtonNumber = 2;
 	public static int slowButtonNumber = 3;

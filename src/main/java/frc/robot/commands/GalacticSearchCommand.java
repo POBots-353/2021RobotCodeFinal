@@ -23,8 +23,20 @@ public class GalacticSearchCommand extends CommandBase{
 
   //in execute(): get information from ultrasonic sensor every t amount of milliseconds, 
   //use this info to guide direction that robot is facing, then drive
+  @Override
+  public void execute() {
+    
+  }
+  // Called once the command ends or is interrupted.
+  @Override
+  public void end(boolean interrupted) {
+  }
 
-
+  // Returns true when the command should end.
+  @Override
+  public boolean isFinished() {
+    return false;
+  }
 
 
 }

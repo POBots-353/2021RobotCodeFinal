@@ -20,6 +20,9 @@ import frc.robot.Constants;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import com.revrobotics.CANEncoder;
+
+//import org.graalvm.compiler.asm.amd64.AMD64Address.Scale; //the shop ghost is in my house i don't know what this means
 
 
 
@@ -49,14 +52,20 @@ public class GalacticSearchSubsystem extends SubsystemBase {
   //*** This creates an instance of the class DifferentialDrive(motor, motor) and allows us to access any methods within that class ***
   public DifferentialDrive drive = new DifferentialDrive(leftMotorGroup,rightMotorGroup);
 
- 
+  private final AnalogInput ultrasonicWide = new AnalogInput(Constants.ultrasonicWideSensorNumber);
+  private final AnalogInput ultrasonicNarrow = new AnalogInput(Constants.ultrasonicNarrowSensorNumber);
+
+  public CANEncoder leftMotorEncoder = new CANEncoder(leftFrontMotor);
   
   //***** --------------- END CANSPARKMAX DRIVE CODE --------------- *****
 
+  public double rawValue;
+  public double currentDistance;
+  public double pathADistance = 156;
+  public double pathBDistance = 120;
+  public double scale = 0; // 0 is a placehoder for now
 
 
-  //* Creates a constructor of the class DriveSubsystem() and sets the DifferentialDrive() variable drive to true *
-  //*** This allows us to use the arcadeDrive() method and actually turn any of the motors in unison ***
   public GalacticSearchSubsystem() {
     drive.setSafetyEnabled(true);
   }
@@ -74,10 +83,26 @@ public class GalacticSearchSubsystem extends SubsystemBase {
 
   }
   public boolean deciderA(AnalogInput distance){ //disable during path B
-    return false;//placeholder
+    rawValue = ultrasonicWide.getValue();
+    currentDistance = rawValue * 0.125 * 2.54; //this is going to convert the raw value to centimeters and then centimeters to inches
+    if (currentDistance <= pathADistance){
+      return true;
+    }
+    else if (currentDistance > pathADistance){
+      return false;
+    }
+    return false;
   }
   public boolean deciderB(AnalogInput distance){ //disable during path A
-    return false;//placeholder
+    rawValue = ultrasonicWide.getValue();
+    currentDistance = rawValue * 0.125 * 2.54; //this is going to convert the raw value to centimeters and then centimeters to inches
+    if (currentDistance <= pathBDistance){
+      return true;
+    }
+    else if (currentDistance > pathADistance){
+      return false;
+    }
+    return false;
   }
 
   //* Creates a method periodic() that will be called once per scheduler run *
