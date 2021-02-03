@@ -55,7 +55,7 @@ public class GalacticSearchSubsystem extends SubsystemBase {
   private final AnalogInput ultrasonicWide = new AnalogInput(Constants.ultrasonicWideSensorNumber);
   private final AnalogInput ultrasonicNarrow = new AnalogInput(Constants.ultrasonicNarrowSensorNumber);
 
-  public CANEncoder leftMotorEncoder = new CANEncoder(leftFrontMotor);
+  public CANEncoder leftMotorEncoder = leftFrontMotor.getEncoder();
   
   //***** --------------- END CANSPARKMAX DRIVE CODE --------------- *****
 
