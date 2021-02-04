@@ -71,7 +71,8 @@ public class GalacticSearchSubsystem extends SubsystemBase {
   }
 
   public void pathRedA(){
-
+    drive.tankDrive(0.4, 0.4);
+    
   }
   public void pathBlueA(){
 
