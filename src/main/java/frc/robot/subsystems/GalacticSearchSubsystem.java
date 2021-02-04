@@ -56,6 +56,7 @@ public class GalacticSearchSubsystem extends SubsystemBase {
   private final AnalogInput ultrasonicNarrow = new AnalogInput(Constants.ultrasonicNarrowSensorNumber);
 
   public CANEncoder leftMotorEncoder = leftFrontMotor.getEncoder();
+  public CANEncoder rightMotorEncoder = rightFrontMotor.getEncoder();
   
   //***** --------------- END CANSPARKMAX DRIVE CODE --------------- *****
 
@@ -64,15 +65,37 @@ public class GalacticSearchSubsystem extends SubsystemBase {
   public double pathADistance = 156;
   public double pathBDistance = 120;
   public double scale = 0; // 0 is a placehoder for now
-
+  public double encoderClicksToRedA = 4166 / 42; //amount of rotations for path Red A
+  public double encoderClicksTurn = 212 / 42; //Change name and placeholder
+  public double encoderClicksToRedA2 = 212 / 42; //placeholder
+  public double radiusOfTurn = 0; //placeholder
+  public boolean stop = false;
 
   public GalacticSearchSubsystem() {
     drive.setSafetyEnabled(true);
   }
 
   public void pathRedA(){
-    drive.tankDrive(0.4, 0.4);
-    
+    double encoderClicksLeft = leftMotorEncoder.getPosition();
+    double encoderClicksRight = rightMotorEncoder.getPosition();
+    if (encoderClicksLeft < encoderClicksToRedA && stop == false){
+      drive.tankDrive(0.4, 0.4);
+    }else if (encoderClicksRight < encoderClicksTurn && stop == false){
+      drive.curvatureDrive(0.3, radiusOfTurn, false);
+    }else if (encoderClicksLeft < encoderClicksToRedA2){
+      drive.tankDrive(0.4, 0.4);
+    }
+    if (encoderClicksLeft > encoderClicksToRedA && stop == false){
+      rightMotorEncoder.setPosition(0);
+      stop = true;
+    }else if (encoderClicksRight > encoderClicksTurn && stop == false){
+      rightMotorEncoder.setPosition(0);
+      leftMotorEncoder.setPosition(0);
+      stop = true;
+    }else if (encoderClicksLeft > encoderClicksToRedA2 && stop == false){
+      rightMotorEncoder.setPosition(0);
+      stop = true;
+    }
   }
   public void pathBlueA(){
 
