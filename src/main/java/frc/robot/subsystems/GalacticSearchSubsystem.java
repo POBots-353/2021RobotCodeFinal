@@ -78,13 +78,15 @@ public class GalacticSearchSubsystem extends SubsystemBase {
   public void pathRedA(){
     double encoderClicksLeft = leftMotorEncoder.getPosition();
     double encoderClicksRight = rightMotorEncoder.getPosition();
+    /* ***Sets the motor to a certain speed*** */
     if (encoderClicksLeft < encoderClicksToRedA && stop == false){
       drive.tankDrive(0.4, 0.4);
     }else if (encoderClicksRight < encoderClicksTurn && stop == false){
       drive.curvatureDrive(0.3, radiusOfTurn, false);
-    }else if (encoderClicksLeft < encoderClicksToRedA2){
+    }else if (encoderClicksLeft < encoderClicksToRedA2 && stop == false){
       drive.tankDrive(0.4, 0.4);
     }
+    /* changes action the motor is doing*/
     if (encoderClicksLeft > encoderClicksToRedA && stop == false){
       rightMotorEncoder.setPosition(0);
       stop = true;
