@@ -70,6 +70,8 @@ public class GalacticSearchSubsystem extends SubsystemBase {
   public double encoderClicksToRedA2 = 212 / 42; //placeholder
   public double radiusOfTurn = 0; //placeholder
   public boolean stop = false;
+  public double leftSidePower = 0.4;
+  public double rightSidePower = 0.4;
 
   public GalacticSearchSubsystem() {
     drive.setSafetyEnabled(true);
@@ -80,21 +82,25 @@ public class GalacticSearchSubsystem extends SubsystemBase {
     double encoderClicksRight = rightMotorEncoder.getPosition();
     /* ***Sets the motor to a certain speed*** */
     if (encoderClicksLeft < encoderClicksToRedA && stop == false){
-      drive.tankDrive(0.4, 0.4);
-    }else if (encoderClicksRight < encoderClicksTurn && stop == false){
-      drive.curvatureDrive(0.3, radiusOfTurn, false);
-    }else if (encoderClicksLeft < encoderClicksToRedA2 && stop == false){
-      drive.tankDrive(0.4, 0.4);
+      drive.tankDrive(leftSidePower, rightSidePower);
+    }
+    else if (encoderClicksRight < encoderClicksTurn && stop == false){
+      drive.curvatureDrive(0.3, radiusOfTurn, false);//not using curvature, need to use tank for turning
+    }
+    else if (encoderClicksLeft < encoderClicksToRedA2 && stop == false){
+      drive.tankDrive(leftSidePower, rightSidePower);
     }
     /* changes action the motor is doing*/
     if (encoderClicksLeft > encoderClicksToRedA && stop == false){
       rightMotorEncoder.setPosition(0);
       stop = true;
-    }else if (encoderClicksRight > encoderClicksTurn && stop == false){
+    }
+    else if (encoderClicksRight > encoderClicksTurn && stop == false){
       rightMotorEncoder.setPosition(0);
       leftMotorEncoder.setPosition(0);
       stop = true;
-    }else if (encoderClicksLeft > encoderClicksToRedA2 && stop == false){
+    }
+    else if (encoderClicksLeft > encoderClicksToRedA2 && stop == false){
       rightMotorEncoder.setPosition(0);
       stop = true;
     }
