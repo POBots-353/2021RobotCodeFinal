@@ -72,7 +72,7 @@ public class GalacticSearchSubsystem extends SubsystemBase {
   public boolean stop = false;
   public double leftSidePower = 0.4;
   public double rightSidePower = 0.4;
-
+  
   public GalacticSearchSubsystem() {
     drive.setSafetyEnabled(true);
   }
@@ -80,30 +80,36 @@ public class GalacticSearchSubsystem extends SubsystemBase {
   public void pathRedA(){
     double encoderClicksLeft = leftMotorEncoder.getPosition();
     double encoderClicksRight = rightMotorEncoder.getPosition();
+    int number = 0;
     /* ***Sets the motor to a certain speed*** */
-    if (encoderClicksLeft < encoderClicksToRedA && stop == false){
+    switch (number) {
+      case 0:
       drive.tankDrive(leftSidePower, rightSidePower);
-    }
-    else if (encoderClicksRight < encoderClicksTurn && stop == false){
+      if (encoderClicksLeft > encoderClicksToRedA){
+        rightMotorEncoder.setPosition(0);
+        leftMotorEncoder.setPosition(0);
+        number += 1;
+      }
+      break;
+      case 1:
       drive.curvatureDrive(0.3, radiusOfTurn, false);//not using curvature, need to use tank for turning
-    }
-    else if (encoderClicksLeft < encoderClicksToRedA2 && stop == false){
+      if (encoderClicksRight > encoderClicksTurn){
+        rightMotorEncoder.setPosition(0);
+        leftMotorEncoder.setPosition(0);
+        number += 1;
+      }
+      break;
+      case 2:
       drive.tankDrive(leftSidePower, rightSidePower);
+      if (encoderClicksLeft > encoderClicksToRedA2){
+        rightMotorEncoder.setPosition(0);
+        leftMotorEncoder.setPosition(0);
+        number += 1;
+      }
+      break;
+      case 3:
     }
     /* changes action the motor is doing*/
-    if (encoderClicksLeft > encoderClicksToRedA && stop == false){
-      rightMotorEncoder.setPosition(0);
-      stop = true;
-    }
-    else if (encoderClicksRight > encoderClicksTurn && stop == false){
-      rightMotorEncoder.setPosition(0);
-      leftMotorEncoder.setPosition(0);
-      stop = true;
-    }
-    else if (encoderClicksLeft > encoderClicksToRedA2 && stop == false){
-      rightMotorEncoder.setPosition(0);
-      stop = true;
-    }
   }
   public void pathBlueA(){
 
