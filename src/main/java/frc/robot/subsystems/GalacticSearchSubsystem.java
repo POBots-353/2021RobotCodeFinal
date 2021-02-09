@@ -107,7 +107,6 @@ public class GalacticSearchSubsystem extends SubsystemBase {
         number += 1;
       }
       break;
-      case 3:
     }
     /* changes action the motor is doing*/
   }
