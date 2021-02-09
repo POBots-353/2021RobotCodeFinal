@@ -72,15 +72,17 @@ public class GalacticSearchSubsystem extends SubsystemBase {
   public boolean stop = false;
   public double leftSidePower = 0.4;
   public double rightSidePower = 0.4;
-  
+  public double encoderClicksLeft = 0;
+  public double encoderClicksRight = 0;
+  public int number = 0;
   public GalacticSearchSubsystem() {
     drive.setSafetyEnabled(true);
   }
 
   public void pathRedA(){
-    double encoderClicksLeft = leftMotorEncoder.getPosition();
-    double encoderClicksRight = rightMotorEncoder.getPosition();
-    int number = 0;
+    encoderClicksLeft = leftMotorEncoder.getPosition();
+    encoderClicksRight = rightMotorEncoder.getPosition();
+    number = 0;
     /* ***Sets the motor to a certain speed*** */
     switch (number) {
       case 0:
@@ -111,13 +113,100 @@ public class GalacticSearchSubsystem extends SubsystemBase {
     /* changes action the motor is doing*/
   }
   public void pathBlueA(){
-
+    encoderClicksLeft = leftMotorEncoder.getPosition();
+    encoderClicksRight = rightMotorEncoder.getPosition();
+    number = 0;
+    /* ***Sets the motor to a certain speed*** */
+    switch (number) {
+      case 0:
+      drive.tankDrive(leftSidePower, rightSidePower);
+      if (encoderClicksLeft > encoderClicksToRedA){
+        rightMotorEncoder.setPosition(0);
+        leftMotorEncoder.setPosition(0);
+        number += 1;
+      }
+      break;
+      case 1:
+      drive.curvatureDrive(0.3, radiusOfTurn, false);//not using curvature, need to use tank for turning
+      if (encoderClicksRight > encoderClicksTurn){
+        rightMotorEncoder.setPosition(0);
+        leftMotorEncoder.setPosition(0);
+        number += 1;
+      }
+      break;
+      case 2:
+      drive.tankDrive(leftSidePower, rightSidePower);
+      if (encoderClicksLeft > encoderClicksToRedA2){
+        rightMotorEncoder.setPosition(0);
+        leftMotorEncoder.setPosition(0);
+        number += 1;
+      }
+      break;
+    }
   }
   public void pathRedB(){
-
+    encoderClicksLeft = leftMotorEncoder.getPosition();
+    encoderClicksRight = rightMotorEncoder.getPosition();
+    number = 0;
+    /* ***Sets the motor to a certain speed*** */
+    switch (number) {
+      case 0:
+      drive.tankDrive(leftSidePower, rightSidePower);
+      if (encoderClicksLeft > encoderClicksToRedA){
+        rightMotorEncoder.setPosition(0);
+        leftMotorEncoder.setPosition(0);
+        number += 1;
+      }
+      break;
+      case 1:
+      drive.curvatureDrive(0.3, radiusOfTurn, false);//not using curvature, need to use tank for turning
+      if (encoderClicksRight > encoderClicksTurn){
+        rightMotorEncoder.setPosition(0);
+        leftMotorEncoder.setPosition(0);
+        number += 1;
+      }
+      break;
+      case 2:
+      drive.tankDrive(leftSidePower, rightSidePower);
+      if (encoderClicksLeft > encoderClicksToRedA2){
+        rightMotorEncoder.setPosition(0);
+        leftMotorEncoder.setPosition(0);
+        number += 1;
+      }
+      break;
+    }
   }
   public void pathBlueB(){
-
+    encoderClicksLeft = leftMotorEncoder.getPosition();
+    encoderClicksRight = rightMotorEncoder.getPosition();
+    number = 0;
+    /* ***Sets the motor to a certain speed*** */
+    switch (number) {
+      case 0:
+      drive.tankDrive(leftSidePower, rightSidePower);
+      if (encoderClicksLeft > encoderClicksToRedA){
+        rightMotorEncoder.setPosition(0);
+        leftMotorEncoder.setPosition(0);
+        number += 1;
+      }
+      break;
+      case 1:
+      drive.curvatureDrive(0.3, radiusOfTurn, false);//not using curvature, need to use tank for turning
+      if (encoderClicksRight > encoderClicksTurn){
+        rightMotorEncoder.setPosition(0);
+        leftMotorEncoder.setPosition(0);
+        number += 1;
+      }
+      break;
+      case 2:
+      drive.tankDrive(leftSidePower, rightSidePower);
+      if (encoderClicksLeft > encoderClicksToRedA2){
+        rightMotorEncoder.setPosition(0);
+        leftMotorEncoder.setPosition(0);
+        number += 1;
+      }
+      break;
+    }
   }
   public boolean deciderA(AnalogInput distance){ //disable during path B
     rawValue = ultrasonicWide.getValue();
