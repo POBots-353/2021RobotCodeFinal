@@ -78,41 +78,7 @@ public class GalacticSearchSubsystem extends SubsystemBase {
   public GalacticSearchSubsystem() {
     drive.setSafetyEnabled(true);
   }
-
-  public void pathRedA(){
-    encoderClicksLeft = leftMotorEncoder.getPosition();
-    encoderClicksRight = rightMotorEncoder.getPosition();
-    number = 0;
-    /* ***Sets the motor to a certain speed*** */
-    switch (number) {
-      case 0:
-      drive.tankDrive(leftSidePower, rightSidePower);
-      if (encoderClicksLeft > encoderClicksToRedA){
-        rightMotorEncoder.setPosition(0);
-        leftMotorEncoder.setPosition(0);
-        number += 1;
-      }
-      break;
-      case 1:
-      drive.curvatureDrive(0.3, radiusOfTurn, false);//not using curvature, need to use tank for turning
-      if (encoderClicksRight > encoderClicksTurn){
-        rightMotorEncoder.setPosition(0);
-        leftMotorEncoder.setPosition(0);
-        number += 1;
-      }
-      break;
-      case 2:
-      drive.tankDrive(leftSidePower, rightSidePower);
-      if (encoderClicksLeft > encoderClicksToRedA2){
-        rightMotorEncoder.setPosition(0);
-        leftMotorEncoder.setPosition(0);
-        number += 1;
-      }
-      break;
-    }
-    /* changes action the motor is doing*/
-  }
-  public void pathBlueA(){
+  public void paths(double encoderClicksFoward1, double turn1,double encoderClicksFoward2){
     encoderClicksLeft = leftMotorEncoder.getPosition();
     encoderClicksRight = rightMotorEncoder.getPosition();
     number = 0;
@@ -144,71 +110,7 @@ public class GalacticSearchSubsystem extends SubsystemBase {
       break;
     }
   }
-  public void pathRedB(){
-    encoderClicksLeft = leftMotorEncoder.getPosition();
-    encoderClicksRight = rightMotorEncoder.getPosition();
-    number = 0;
-    /* ***Sets the motor to a certain speed*** */
-    switch (number) {
-      case 0:
-      drive.tankDrive(leftSidePower, rightSidePower);
-      if (encoderClicksLeft > encoderClicksToRedA){
-        rightMotorEncoder.setPosition(0);
-        leftMotorEncoder.setPosition(0);
-        number += 1;
-      }
-      break;
-      case 1:
-      drive.curvatureDrive(0.3, radiusOfTurn, false);//not using curvature, need to use tank for turning
-      if (encoderClicksRight > encoderClicksTurn){
-        rightMotorEncoder.setPosition(0);
-        leftMotorEncoder.setPosition(0);
-        number += 1;
-      }
-      break;
-      case 2:
-      drive.tankDrive(leftSidePower, rightSidePower);
-      if (encoderClicksLeft > encoderClicksToRedA2){
-        rightMotorEncoder.setPosition(0);
-        leftMotorEncoder.setPosition(0);
-        number += 1;
-      }
-      break;
-    }
-  }
-  public void pathBlueB(){
-    encoderClicksLeft = leftMotorEncoder.getPosition();
-    encoderClicksRight = rightMotorEncoder.getPosition();
-    number = 0;
-    /* ***Sets the motor to a certain speed*** */
-    switch (number) {
-      case 0:
-      drive.tankDrive(leftSidePower, rightSidePower);
-      if (encoderClicksLeft > encoderClicksToRedA){
-        rightMotorEncoder.setPosition(0);
-        leftMotorEncoder.setPosition(0);
-        number += 1;
-      }
-      break;
-      case 1:
-      drive.curvatureDrive(0.3, radiusOfTurn, false);//not using curvature, need to use tank for turning
-      if (encoderClicksRight > encoderClicksTurn){
-        rightMotorEncoder.setPosition(0);
-        leftMotorEncoder.setPosition(0);
-        number += 1;
-      }
-      break;
-      case 2:
-      drive.tankDrive(leftSidePower, rightSidePower);
-      if (encoderClicksLeft > encoderClicksToRedA2){
-        rightMotorEncoder.setPosition(0);
-        leftMotorEncoder.setPosition(0);
-        number += 1;
-      }
-      break;
-    }
-  }
-  public boolean deciderA(AnalogInput distance){ //disable during path B
+  public boolean deciderA(/*AnalogInput distance*/){ //disable during path B
     rawValue = ultrasonicWide.getValue();
     currentDistance = rawValue * 0.125 * 2.54; //this is going to convert the raw value to centimeters and then centimeters to inches
     if (currentDistance <= pathADistance){

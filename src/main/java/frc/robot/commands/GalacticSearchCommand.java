@@ -14,18 +14,23 @@ public class GalacticSearchCommand extends CommandBase{
         //Use addRequirements() here to declare subsystem dependencies.
         addRequirements(galacticSubsystem);
       }
-
+  public boolean pathAorB;
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    
+    pathAorB = galacticSubsystem.deciderA();
   }
 
   //in execute(): get information from ultrasonic sensor every t amount of milliseconds, 
   //use this info to guide direction that robot is facing, then drive
   @Override
   public void execute() {
-    
+    if (pathAorB){
+      //Sends parameters to path
+      galacticSubsystem.paths(0,0,0);
+    }else if (pathAorB){
+      galacticSubsystem.paths(0,0,0);
+    }
   }
   // Called once the command ends or is interrupted.
   @Override
