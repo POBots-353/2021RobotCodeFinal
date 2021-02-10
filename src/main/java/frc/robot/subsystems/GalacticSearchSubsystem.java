@@ -5,17 +5,21 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-
-
-
-
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.geometry.Pose2d;
+import edu.wpi.first.wpilibj.interfaces.Gyro;
+import edu.wpi.first.wpilibj.kinematics.ChassisSpeeds;
+import edu.wpi.first.wpilibj.kinematics.DifferentialDriveKinematics;
+import edu.wpi.first.wpilibj.kinematics.DifferentialDriveOdometry;
+import edu.wpi.first.wpilibj.kinematics.DifferentialDriveWheelSpeeds;
+import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import edu.wpi.first.wpilibj.AnalogInput;
+import edu.wpi.first.wpilibj.ADXRS450_Gyro;
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
-
+import edu.wpi.first.wpilibj.controller.RamseteController;
 import frc.robot.Constants;
 
 import com.revrobotics.CANSparkMax;
@@ -23,10 +27,6 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.CANEncoder;
 
 //import org.graalvm.compiler.asm.amd64.AMD64Address.Scale; //the shop ghost is in my house i don't know what this means
-
-
-
-
 
 
 public class GalacticSearchSubsystem extends SubsystemBase {
@@ -52,94 +52,155 @@ public class GalacticSearchSubsystem extends SubsystemBase {
   //*** This creates an instance of the class DifferentialDrive(motor, motor) and allows us to access any methods within that class ***
   public DifferentialDrive drive = new DifferentialDrive(leftMotorGroup,rightMotorGroup);
 
-  private final AnalogInput ultrasonicWide = new AnalogInput(Constants.ultrasonicWideSensorNumber);
-  private final AnalogInput ultrasonicNarrow = new AnalogInput(Constants.ultrasonicNarrowSensorNumber);
 
   public CANEncoder leftMotorEncoder = leftFrontMotor.getEncoder();
   public CANEncoder rightMotorEncoder = rightFrontMotor.getEncoder();
-  
-  //***** --------------- END CANSPARKMAX DRIVE CODE --------------- *****
+  // The left-side drive encoder
+  private final Encoder m_leftEncoder = new Encoder(Constants.leftFrontMotorDeviceID, Constants.leftRearMotorDeviceID, false);
 
-  public double rawValue;
-  public double currentDistance;
-  public double pathADistance = 156;
-  public double pathBDistance = 120;
-  public double scale = 0; // 0 is a placehoder for now
-  public double encoderClicksToRedA = 4166 / 42; //amount of rotations for path Red A
-  public double encoderClicksTurn = 212 / 42; //Change name and placeholder
-  public double encoderClicksToRedA2 = 212 / 42; //placeholder
-  public double radiusOfTurn = 0; //placeholder
-  public boolean stop = false;
-  public double leftSidePower = 0.4;
-  public double rightSidePower = 0.4;
-  public double encoderClicksLeft = 0;
-  public double encoderClicksRight = 0;
-  public int number = 0;
+  // The right-side drive encoder
+  private final Encoder m_rightEncoder = new Encoder(Constants.rightFrontMotorDeviceID, Constants.rightRearMotorDeviceID, false);
+
+  // The gyro sensor
+  private final Gyro m_gyro = new ADXRS450_Gyro();
+
+  // Odometry class for tracking robot pose
+  private final DifferentialDriveOdometry m_odometry;
+
+  /**
+   * Creates a new DriveSubsystem.
+   */
   public GalacticSearchSubsystem() {
-    drive.setSafetyEnabled(true);
-  }
-  public void paths(double encoderClicksFoward1, double turn1,double encoderClicksFoward2){
-    encoderClicksLeft = leftMotorEncoder.getPosition();
-    encoderClicksRight = rightMotorEncoder.getPosition();
-    number = 0;
-    /* ***Sets the motor to a certain speed*** */
-    switch (number) {
-      case 0:
-      drive.tankDrive(leftSidePower, rightSidePower);
-      if (encoderClicksLeft > encoderClicksToRedA){
-        rightMotorEncoder.setPosition(0);
-        leftMotorEncoder.setPosition(0);
-        number += 1;
-      }
-      break;
-      case 1:
-      drive.curvatureDrive(0.3, radiusOfTurn, false);//not using curvature, need to use tank for turning
-      if (encoderClicksRight > encoderClicksTurn){
-        rightMotorEncoder.setPosition(0);
-        leftMotorEncoder.setPosition(0);
-        number += 1;
-      }
-      break;
-      case 2:
-      drive.tankDrive(leftSidePower, rightSidePower);
-      if (encoderClicksLeft > encoderClicksToRedA2){
-        rightMotorEncoder.setPosition(0);
-        leftMotorEncoder.setPosition(0);
-        number += 1;
-      }
-      break;
-    }
-  }
-  public boolean deciderA(/*AnalogInput distance*/){ //disable during path B
-    rawValue = ultrasonicWide.getValue();
-    currentDistance = rawValue * 0.125 * 2.54; //this is going to convert the raw value to centimeters and then centimeters to inches
-    if (currentDistance <= pathADistance){
-      return true;
-    }
-    else if (currentDistance > pathADistance){
-      return false;
-    }
-    return false;
-  }
-  public boolean deciderB(AnalogInput distance){ //disable during path A
-    rawValue = ultrasonicWide.getValue();
-    currentDistance = rawValue * 0.125 * 2.54; //this is going to convert the raw value to centimeters and then centimeters to inches
-    if (currentDistance <= pathBDistance){
-      return true;
-    }
-    else if (currentDistance > pathADistance){
-      return false;
-    }
-    return false;
+    // Sets the distance per pulse for the encoders
+    m_leftEncoder.setDistancePerPulse(0.003); //feet need to convert to meters
+    m_rightEncoder.setDistancePerPulse(0.003);
+
+    resetEncoders();
+    m_odometry = new DifferentialDriveOdometry(m_gyro.getRotation2d());
   }
 
-  //* Creates a method periodic() that will be called once per scheduler run *
-  //*** This allows us to repeate sections of code and acts similar in nature to a loop ***
   @Override
   public void periodic() {
-    
+    // Update the odometry in the periodic block
+    m_odometry.update(m_gyro.getRotation2d(), m_leftEncoder.getDistance(), m_rightEncoder.getDistance());
   }
 
+  /**
+   * Returns the currently-estimated pose of the robot.
+   *
+   * @return The pose.
+   */
+  public Pose2d getPose() {
+    return m_odometry.getPoseMeters();
+  }
 
+  /**
+   * Returns the current wheel speeds of the robot.
+   *
+   * @return The current wheel speeds.
+   */
+  public DifferentialDriveWheelSpeeds getWheelSpeeds() {
+    return new DifferentialDriveWheelSpeeds(m_leftEncoder.getRate(), m_rightEncoder.getRate());
+  }
 
+  /**
+   * Resets the odometry to the specified pose.
+   *
+   * @param pose The pose to which to set the odometry.
+   */
+  public void resetOdometry(Pose2d pose) {
+    resetEncoders();
+    m_odometry.resetPosition(pose, m_gyro.getRotation2d());
+  }
+
+  /**
+   * Drives the robot using arcade controls.
+   *
+   * @param fwd the commanded forward movement
+   * @param rot the commanded rotation
+   */
+  public void arcadeDrive(double fwd, double rot) {
+    drive.arcadeDrive(fwd, rot);
+  }
+
+  /**
+   * Controls the left and right sides of the drive directly with voltages.
+   *
+   * @param leftVolts  the commanded left output
+   * @param rightVolts the commanded right output
+   */
+  public void tankDriveVolts(double leftVolts, double rightVolts) {
+    leftMotorGroup.setVoltage(leftVolts);
+    rightMotorGroup.setVoltage(-rightVolts);
+    drive.feed();
+  }
+
+  /**
+   * Resets the drive encoders to currently read a position of 0.
+   */
+  public void resetEncoders() {
+    m_leftEncoder.reset();
+    m_rightEncoder.reset();
+  }
+
+  /**
+   * Gets the average distance of the two encoders.
+   *
+   * @return the average of the two encoder readings
+   */
+  public double getAverageEncoderDistance() {
+    return (m_leftEncoder.getDistance() + m_rightEncoder.getDistance()) / 2.0;
+  }
+
+  /**
+   * Gets the left drive encoder.
+   *
+   * @return the left drive encoder
+   */
+  public Encoder getLeftEncoder() {
+    return m_leftEncoder;
+  }
+
+  /**
+   * Gets the right drive encoder.
+   *
+   * @return the right drive encoder
+   */
+  public Encoder getRightEncoder() {
+    return m_rightEncoder;
+  }
+
+  /**
+   * Sets the max output of the drive.  Useful for scaling the drive to drive more slowly.
+   *
+   * @param maxOutput the maximum output to which the drive will be constrained
+   */
+  public void setMaxOutput(double maxOutput) {
+    drive.setMaxOutput(maxOutput);
+  }
+
+  /**
+   * Zeroes the heading of the robot.
+   */
+  public void zeroHeading() {
+    m_gyro.reset();
+  }
+
+  /**
+   * Returns the heading of the robot.
+   *
+   * @return the robot's heading in degrees, from -180 to 180
+   */
+  public double getHeading() {
+    return m_gyro.getRotation2d().getDegrees();
+  }
+
+  /**
+   * Returns the turn rate of the robot.
+   *
+   * @return The turn rate of the robot, in degrees per second
+   */
+  public double getTurnRate() {
+    return -m_gyro.getRate();
+  }
 }
