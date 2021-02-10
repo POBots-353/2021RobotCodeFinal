@@ -17,7 +17,7 @@ import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 
 import frc.robot.Constants;
-
+import frc.robot.GalacticConstants;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.CANEncoder;
@@ -64,21 +64,21 @@ public class GalacticSearchSubsystem extends SubsystemBase {
   public double currentDistance;
   public double pathADistance = 156;
   public double pathBDistance = 120;
-  public double scale = 0; // 0 is a placehoder for now
-  public double encoderClicksToRedA = 4166 / 42; //amount of rotations for path Red A
-  public double encoderClicksTurn = 212 / 42; //Change name and placeholder
-  public double encoderClicksToRedA2 = 212 / 42; //placeholder
+  public double scale = 0; // 0 is a placeholder for now
+  
+  /*public double encoderClicksToBlueA = 5000 / 42; //amount of rotations for path Blue A
+  public double encoderClicksTurnBlueA1 = 212/42; //placeholder */ 
   public double radiusOfTurn = 0; //placeholder
   public boolean stop = false;
   public double leftSidePower = 0.4;
   public double rightSidePower = 0.4;
-  public double encoderClicksLeft = 0;
+  public double encoderClicksLeft = 0; //receiving value from encoder
   public double encoderClicksRight = 0;
   public int number = 0;
   public GalacticSearchSubsystem() {
     drive.setSafetyEnabled(true);
   }
-  public void paths(double encoderClicksFoward1, double turn1,double encoderClicksFoward2){
+  public void paths(double encoderClicksFoward1, double turn1, double encoderClicksFoward2){
     encoderClicksLeft = leftMotorEncoder.getPosition();
     encoderClicksRight = rightMotorEncoder.getPosition();
     number = 0;
@@ -86,7 +86,7 @@ public class GalacticSearchSubsystem extends SubsystemBase {
     switch (number) {
       case 0:
       drive.tankDrive(leftSidePower, rightSidePower);
-      if (encoderClicksLeft > encoderClicksToRedA){
+      if (encoderClicksLeft > GalacticConstants.encoderClicksToRedA){
         rightMotorEncoder.setPosition(0);
         leftMotorEncoder.setPosition(0);
         number += 1;
@@ -94,7 +94,7 @@ public class GalacticSearchSubsystem extends SubsystemBase {
       break;
       case 1:
       drive.curvatureDrive(0.3, radiusOfTurn, false);//not using curvature, need to use tank for turning
-      if (encoderClicksRight > encoderClicksTurn){
+      if (encoderClicksRight > GalacticConstants.encoderClicksTurnRedA1){
         rightMotorEncoder.setPosition(0);
         leftMotorEncoder.setPosition(0);
         number += 1;
@@ -102,7 +102,7 @@ public class GalacticSearchSubsystem extends SubsystemBase {
       break;
       case 2:
       drive.tankDrive(leftSidePower, rightSidePower);
-      if (encoderClicksLeft > encoderClicksToRedA2){
+      if (encoderClicksLeft > GalacticConstants.encoderClicksToRedA2){
         rightMotorEncoder.setPosition(0);
         leftMotorEncoder.setPosition(0);
         number += 1;
@@ -110,24 +110,25 @@ public class GalacticSearchSubsystem extends SubsystemBase {
       break;
     }
   }
+
   public boolean deciderA(/*AnalogInput distance*/){ //disable during path B
     rawValue = ultrasonicWide.getValue();
     currentDistance = rawValue * 0.125 * 2.54; //this is going to convert the raw value to centimeters and then centimeters to inches
-    if (currentDistance <= pathADistance){
+    if (currentDistance <= pathADistance){ //red
       return true;
     }
-    else if (currentDistance > pathADistance){
+    else if (currentDistance > pathADistance){ //blue 
       return false;
     }
     return false;
   }
-  public boolean deciderB(AnalogInput distance){ //disable during path A
+  public boolean deciderB(/*AnalogInput distance*/){ //disable during path A
     rawValue = ultrasonicWide.getValue();
     currentDistance = rawValue * 0.125 * 2.54; //this is going to convert the raw value to centimeters and then centimeters to inches
-    if (currentDistance <= pathBDistance){
+    if (currentDistance <= pathBDistance){ //red
       return true;
     }
-    else if (currentDistance > pathADistance){
+    else if (currentDistance > pathADistance){ //blue
       return false;
     }
     return false;
