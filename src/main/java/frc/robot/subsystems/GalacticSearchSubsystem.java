@@ -93,7 +93,6 @@ public class GalacticSearchSubsystem extends SubsystemBase {
   public Pose2d getPose() {
     return m_odometry.getPoseMeters();
   }
-
   /**
    * Returns the current wheel speeds of the robot.
    *
@@ -169,10 +168,8 @@ public class GalacticSearchSubsystem extends SubsystemBase {
   public Encoder getRightEncoder() {
     return m_rightEncoder;
   }
-
   /**
    * Sets the max output of the drive.  Useful for scaling the drive to drive more slowly.
-   *
    * @param maxOutput the maximum output to which the drive will be constrained
    */
   public void setMaxOutput(double maxOutput) {
@@ -185,7 +182,6 @@ public class GalacticSearchSubsystem extends SubsystemBase {
   public void zeroHeading() {
     m_gyro.reset();
   }
-
   /**
    * Returns the heading of the robot.
    *
