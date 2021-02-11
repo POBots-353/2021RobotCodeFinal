@@ -52,11 +52,15 @@ public class AutoNavCommand extends CommandBase{
 
 
   public void slalom(){
+    //resets encoders
     rightMotorEncoder.setPosition(0);
     leftMotorEncoder.setPosition(0);
+    
+    //declares encoder objects to be passed into methods
     double encoderClicksLeft = leftMotorEncoder.getPosition();
     double encoderClicksRight = rightMotorEncoder.getPosition();
 
+    //calls each method passing in the encoders where needed
     enterExit(encoderClicksRight);
     longSection(encoderClicksLeft);
     circle(encoderClicksRight);
@@ -64,41 +68,59 @@ public class AutoNavCommand extends CommandBase{
     enterExit(encoderClicksRight);
   }
 
+  //enterExit is the first and last curve (they are equal) going out and in the start and finish
   public void enterExit(double rightClicks){
+
+    //physics math for turn in radians, radius of turn (in.), get length outer wheel travels (in.) and converts to amount of encoder clicks
     double theta = Math.PI/2;
     double radius = 30;
     double outerLength = theta * radius;
     double clicks = outerLength * 25;
 
+    //turns until outer wheel travels the whole turn (speed will have to be adjusted for exact turn when we test)
     while(rightClicks < clicks){
       drive.tankDrive(0.3, 0.6);
     }
+    
+    //resets encoder click counts for next method
     rightMotorEncoder.setPosition(0);
     leftMotorEncoder.setPosition(0);
   }
 
+  //longSection is the second and second-to-last curve going around the long section of markers
   public void longSection(double leftClicks){
+
+    //physics math for turn in radians, radius of turn (in.), get length outer wheel travels (in.) and converts to amount of encoder clicks
     double theta = Math.PI;
     double radius = 60;
     double outerLength = theta * radius;
     double clicks = outerLength * 25;
 
+    //turns until outer wheel travels the whole turn (speed will have to be adjusted for exact turn when we test)
     while(leftClicks < clicks){
       drive.tankDrive(0.6, 0.3);
     }
+    
+    //resets encoder click counts for next method
     rightMotorEncoder.setPosition(0);
     leftMotorEncoder.setPosition(0);
   }
 
+  //circle is the third turn, a circle around the marker farthest to the right
   public void circle(double rightClicks){
+
+    //physics math for turn in radians, radius of turn (in.), get length outer wheel travels (in.) and converts to amount of encoder clicks
     double theta = 2 * Math.PI;
     double radius = 30;
     double outerLength = theta * radius;
     double clicks = outerLength * 25;
 
+    //turns until outer wheel travels the whole turn (speed will have to be adjusted for exact turn when we test)
     while(rightClicks < clicks){
       drive.tankDrive(0.3, 0.6);
     }
+    
+    //resets encoder click counts for next method
     rightMotorEncoder.setPosition(0);
     leftMotorEncoder.setPosition(0);
   }
