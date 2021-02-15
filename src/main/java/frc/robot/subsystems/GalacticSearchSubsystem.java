@@ -56,24 +56,28 @@ public class GalacticSearchSubsystem extends SubsystemBase {
   public CANEncoder leftMotorEncoder = leftFrontMotor.getEncoder();
   public CANEncoder rightMotorEncoder = rightFrontMotor.getEncoder();
   // The left-side drive encoder
-  private final Encoder m_leftEncoder = new Encoder(Constants.leftFrontMotorDeviceID, Constants.leftRearMotorDeviceID, false);
+ // private final Encoder m_leftEncoder = new Encoder(Constants.leftFrontMotorDeviceID, Constants.leftRearMotorDeviceID, false);
 
   // The right-side drive encoder
-  private final Encoder m_rightEncoder = new Encoder(Constants.rightFrontMotorDeviceID, Constants.rightRearMotorDeviceID, false);
-
+  //private final Encoder m_rightEncoder = new Encoder(Constants.rightFrontMotorDeviceID, Constants.rightRearMotorDeviceID, false);
+  
   // The gyro sensor
   private final Gyro m_gyro = new ADXRS450_Gyro();
 
   // Odometry class for tracking robot pose
   private final DifferentialDriveOdometry m_odometry;
-
+  public double leftDistance;
+  public double rightDistance;
+  public double conversionToMeters = 0.004267;
   /**
    * Creates a new DriveSubsystem.
    */
   public GalacticSearchSubsystem() {
-    // Sets the distance per pulse for the encoders
-    m_leftEncoder.setDistancePerPulse(0.003); //feet need to convert to meters
-    m_rightEncoder.setDistancePerPulse(0.003);
+    // Sets the distance per pulse for the encoders 
+    //0.004267m
+    leftMotorEncoder.setVelocityConversionFactor(conversionToMeters);
+    leftDistance = leftMotorEncoder.getPosition() * conversionToMeters;
+    rightDistance = rightMotorEncoder.getPosition() * conversionToMeters;
 
     resetEncoders();
     m_odometry = new DifferentialDriveOdometry(m_gyro.getRotation2d());
@@ -82,7 +86,7 @@ public class GalacticSearchSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     // Update the odometry in the periodic block
-    m_odometry.update(m_gyro.getRotation2d(), m_leftEncoder.getDistance(), m_rightEncoder.getDistance());
+    m_odometry.update(m_gyro.getRotation2d(), leftDistance, rightDistance);
   }
 
   /**
@@ -99,7 +103,7 @@ public class GalacticSearchSubsystem extends SubsystemBase {
    * @return The current wheel speeds.
    */
   public DifferentialDriveWheelSpeeds getWheelSpeeds() {
-    return new DifferentialDriveWheelSpeeds(m_leftEncoder.getRate(), m_rightEncoder.getRate());
+    return new DifferentialDriveWheelSpeeds(leftMotorEncoder.getVelocity(), rightMotorEncoder.getVelocity());
   }
 
   /**
@@ -138,8 +142,8 @@ public class GalacticSearchSubsystem extends SubsystemBase {
    * Resets the drive encoders to currently read a position of 0.
    */
   public void resetEncoders() {
-    m_leftEncoder.reset();
-    m_rightEncoder.reset();
+    leftMotorEncoder.setPosition(0);
+    rightMotorEncoder.setPosition(0);
   }
 
   /**
@@ -148,7 +152,7 @@ public class GalacticSearchSubsystem extends SubsystemBase {
    * @return the average of the two encoder readings
    */
   public double getAverageEncoderDistance() {
-    return (m_leftEncoder.getDistance() + m_rightEncoder.getDistance()) / 2.0;
+    return (leftMotorEncoder.getPosition() * conversionToMeters + rightMotorEncoder.getPosition() * conversionToMeters) / 2.0;
   }
 
   /**
@@ -156,8 +160,8 @@ public class GalacticSearchSubsystem extends SubsystemBase {
    *
    * @return the left drive encoder
    */
-  public Encoder getLeftEncoder() {
-    return m_leftEncoder;
+  public CANEncoder getLeftEncoder() {
+    return leftMotorEncoder;
   }
 
   /**
@@ -165,8 +169,8 @@ public class GalacticSearchSubsystem extends SubsystemBase {
    *
    * @return the right drive encoder
    */
-  public Encoder getRightEncoder() {
-    return m_rightEncoder;
+  public CANEncoder getRightEncoder() {
+    return rightMotorEncoder;
   }
   /**
    * Sets the max output of the drive.  Useful for scaling the drive to drive more slowly.

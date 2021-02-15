@@ -124,7 +124,7 @@ public class RobotContainer {
 
     // An example trajectory to follow.  All units in meters.
     //Change the path to the actual path in the computer
-    String trajectoryJSON = "2021ROBOTCODEFINAL/PathWeaver/Paths/Red.wpilib.json"; // Try Red.path
+    String trajectoryJSON = "/home/lvuser/deploy/paths/pathweaver.wpilib.json"; // wpilib.json
     Trajectory trajectory = new Trajectory();
     try {
       Path trajectoryPath = Filesystem.getDeployDirectory().toPath().resolve(trajectoryJSON);
