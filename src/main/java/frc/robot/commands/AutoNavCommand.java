@@ -61,15 +61,15 @@ public class AutoNavCommand extends CommandBase{
     double encoderClicksRight = rightMotorEncoder.getPosition();
 
     //calls each method passing in the encoders where needed
-    enterExit(encoderClicksRight);
-    longSection(encoderClicksLeft);
-    circle(encoderClicksRight);
-    longSection(encoderClicksLeft);
-    enterExit(encoderClicksRight);
+    slalomEnterExit(encoderClicksRight);
+    slalomLongSection(encoderClicksLeft);
+    slalomCircle(encoderClicksRight);
+    slalomLongSection(encoderClicksLeft);
+    slalomEnterExit(encoderClicksRight);
   }
 
-  //enterExit is the first and last curve (they are equal) going out and in the start and finish
-  public void enterExit(double rightClicks){
+  //slalomEnterExit is the first and last curve (they are equal) going out and in the start and finish
+  public void slalomEnterExit(double rightClicks){
 
     //physics math for turn in radians, radius of turn (in.), get length outer wheel travels (in.) and converts to amount of encoder clicks
     double theta = Math.PI/2;
@@ -87,8 +87,8 @@ public class AutoNavCommand extends CommandBase{
     leftMotorEncoder.setPosition(0);
   }
 
-  //longSection is the second and second-to-last curve going around the long section of markers
-  public void longSection(double leftClicks){
+  //slalomLongSection is the second and second-to-last curve going around the long section of markers
+  public void slalomLongSection(double leftClicks){
 
     //physics math for turn in radians, radius of turn (in.), get length outer wheel travels (in.) and converts to amount of encoder clicks
     double theta = Math.PI;
@@ -106,8 +106,8 @@ public class AutoNavCommand extends CommandBase{
     leftMotorEncoder.setPosition(0);
   }
 
-  //circle is the third turn, a circle around the marker farthest to the right
-  public void circle(double rightClicks){
+  //slalomCircle is the third turn, a circle around the marker farthest to the right
+  public void slalomCircle(double rightClicks){
 
     //physics math for turn in radians, radius of turn (in.), get length outer wheel travels (in.) and converts to amount of encoder clicks
     double theta = 2 * Math.PI;
