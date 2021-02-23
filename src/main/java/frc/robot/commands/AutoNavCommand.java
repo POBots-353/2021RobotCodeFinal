@@ -49,7 +49,10 @@ public class AutoNavCommand extends CommandBase{
     addRequirements(driveSubsystem);
   }
 
-
+  @Override
+  public void execute() {
+    slalom();
+  }
 
   public void slalom(){
     //resets encoders
@@ -123,5 +126,10 @@ public class AutoNavCommand extends CommandBase{
     //resets encoder click counts for next method
     rightMotorEncoder.setPosition(0);
     leftMotorEncoder.setPosition(0);
+  }
+
+  @Override
+  public boolean isFinished() {
+    return false;
   }
 }
