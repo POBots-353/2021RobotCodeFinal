@@ -114,6 +114,7 @@ public final class Constants {
     // The Robot Characterization Toolsuite provides a convenient tool for obtaining these
 	// values for your robot.
 	/* ****Values needs to be changed**** */
+	/**CAN ONLY BE TESTED ON ROBOT**/
     public static final double ksVolts = 0.22;
     public static final double kvVoltSecondsPerMeter = 1.98;
     public static final double kaVoltSecondsSquaredPerMeter = 0.2;

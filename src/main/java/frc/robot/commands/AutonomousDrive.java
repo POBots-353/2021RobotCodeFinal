@@ -34,11 +34,11 @@ public class AutonomousDrive extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    t++;
+    /*t++;
     if (t <100){
       driveSubsystem.manualDrive(1, 0, -.60); //sends commands to manualDrive repeatedly
     }
-  
+  */
   }
 
   // Called once the command ends or is interrupted.
