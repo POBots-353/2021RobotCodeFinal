@@ -23,7 +23,7 @@ public class BallTransitSubsystem extends SubsystemBase {
   public CANSparkMax intakeMotor = new CANSparkMax(Constants.intakeMotorDeviceID,MotorType.kBrushless);
   public CANSparkMax conveyorMotor = new CANSparkMax(Constants.conveyorMotorDeviceID,MotorType.kBrushless);
   public CANSparkMax shooterMotor = new CANSparkMax(Constants.shooterMotorDeviceID,MotorType.kBrushless);
-  //**What happens if take out preshooter**//
+  /**What happens if we take out preshooter?**/
   public CANSparkMax preShooterMotor = new CANSparkMax(Constants.preShooterDeviceID, MotorType.kBrushless);
   
   public DigitalInput shooterSensor = new DigitalInput(Constants.shooterLimitSwitch);
@@ -128,10 +128,6 @@ public class BallTransitSubsystem extends SubsystemBase {
       shooterReverse = false;
     }
   
-
-
-
-
 }
 }
 
