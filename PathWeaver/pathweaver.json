@@ -5,5 +5,5 @@
   "maxAcceleration": 1.0,
   "wheelBase": 0.152,
   "gameName": "Barrel Racing Path",
-  "outputDir": "../../2021RobotCodeFinal-1"
+  "outputDir": "../src/main/deploy/output"
 }
