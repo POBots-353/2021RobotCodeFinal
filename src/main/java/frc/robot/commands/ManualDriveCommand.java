@@ -5,19 +5,12 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-
-
-
-
 package frc.robot.commands;
 
 import frc.robot.subsystems.DriveSubsystem;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.*;
  
-
-
-
 
 public class ManualDriveCommand extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})

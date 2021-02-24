@@ -9,7 +9,7 @@ package frc.robot;
 
 import java.io.IOException;
 import java.nio.file.Path;
-import java.util.List;
+//import java.util.List;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Filesystem;
@@ -18,29 +18,21 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj.controller.RamseteController;
 import edu.wpi.first.wpilibj.controller.SimpleMotorFeedforward;
-import edu.wpi.first.wpilibj.geometry.Pose2d;
-import edu.wpi.first.wpilibj.geometry.Rotation2d;
-import edu.wpi.first.wpilibj.geometry.Translation2d;
 import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryConfig;
-import edu.wpi.first.wpilibj.trajectory.TrajectoryGenerator;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryUtil;
 import edu.wpi.first.wpilibj.trajectory.constraint.DifferentialDriveVoltageConstraint;
 import frc.robot.commands.AlignRobotCommand;
-import frc.robot.commands.AutonomousDrive;
+import frc.robot.commands.AutoNavCommand;
+//import frc.robot.commands.AutonomousDrive;
 import frc.robot.commands.HoodCommand;
 //import frc.robot.commands.DropIntakeCommand;
-
-//Natalia is trying to add a command for the new autonomous challanges here:
-//import frc.robot.commands.GalacticSearch;
 
 import frc.robot.commands.ManualDriveCommand;
 import frc.robot.subsystems.BallTransitSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.HoodSubsystem;
 import frc.robot.subsystems.GalacticSearchSubsystem;
-//import frc.robot.subsystems.OperatorIntakeSystem;
-//import frc.robot.subsystems.DropIntakeSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -84,6 +76,8 @@ public class RobotContainer {
    * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
+    JoystickButton autoNavStart = new JoystickButton(driverStick, Constants.autoNavButton);
+    autoNavStart.whenPressed(new AutoNavCommand(driveSubsystem));
 
     JoystickButton magicButton = new JoystickButton(driverStick, Constants.AutoAlignButtonNumber);
     magicButton.whileHeld(new AlignRobotCommand(driveSubsystem, hood))

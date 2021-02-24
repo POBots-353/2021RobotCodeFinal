@@ -34,9 +34,6 @@ public class HoodCommand extends CommandBase {
   @Override
   public void execute() {
       //This is empty (Most likly the reason hood doesn't run)
-      
-
-      
   
   }
 

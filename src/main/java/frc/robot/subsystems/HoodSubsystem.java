@@ -67,12 +67,9 @@ public class HoodSubsystem extends SubsystemBase {
   }
 @Override
   public void periodic() {
-    /*if(hoodToggleState == 0 && RobotContainer.operatorStick.getRawButton(Constants.hoodRunBtnNum)){
+    if(hoodToggleState == 0 && RobotContainer.operatorStick.getRawButton(Constants.hoodRunBtnNum)){
       double ty = NetworkTableInstance.getDefault().getTable("limelight").getEntry("ty").getDouble(0);
- 
-    
-    
-    setPoint = ty; //regression to convert limelight to encoder value
+      setPoint = ty; //regression to convert limelight to encoder value
     // anticipate arctan here 
     }
     else if(hoodToggleState == 1 && RobotContainer.operatorStick.getRawButton(Constants.hoodRunBtnNum)){
@@ -88,7 +85,7 @@ public class HoodSubsystem extends SubsystemBase {
     
 
     encoderPosition = hoodMotorEncoder.getPosition();
-*/
+
 
     SmartDashboard.putNumber("Hood toggle position: ", hoodToggleState);
     SmartDashboard.putNumber("Encoder Position", encoderPosition);

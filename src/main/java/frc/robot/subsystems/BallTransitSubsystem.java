@@ -24,7 +24,7 @@ public class BallTransitSubsystem extends SubsystemBase {
   public CANSparkMax conveyorMotor = new CANSparkMax(Constants.conveyorMotorDeviceID,MotorType.kBrushless);
   public CANSparkMax shooterMotor = new CANSparkMax(Constants.shooterMotorDeviceID,MotorType.kBrushless);
   /**What happens if we take out preshooter?**/
-  public CANSparkMax preShooterMotor = new CANSparkMax(Constants.preShooterDeviceID, MotorType.kBrushless);
+  //public CANSparkMax preShooterMotor = new CANSparkMax(Constants.preShooterDeviceID, MotorType.kBrushless);
   
   public DigitalInput shooterSensor = new DigitalInput(Constants.shooterLimitSwitch);
   public DigitalInput intakeSensor = new DigitalInput(Constants.intakeSensorNumber);
@@ -44,7 +44,7 @@ public class BallTransitSubsystem extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
      boolean intakeBtn = RobotContainer.operatorStick.getRawButtonPressed(Constants.intakeButtonNumber); // was driverStick
-     boolean outtakeBtn = RobotContainer.operatorStick.getRawButton(Constants.outtakeButtonNumber); // was driverStick
+     boolean outtakeBtn = RobotContainer.operatorStick.getRawButtonPressed(Constants.outtakeButtonNumber); // was driverStick
      boolean conveyorUpBtn = RobotContainer.operatorStick.getRawButton(Constants.conveyorUpButtonNumber); //getRawButton
      boolean conveyorDownBtn = RobotContainer.operatorStick.getRawButton(Constants.conveyorUpButtonNumber); //getRawButton
      boolean shootBtn = RobotContainer.operatorStick.getRawButtonPressed(Constants.shootButtonNumber);
@@ -82,7 +82,7 @@ public class BallTransitSubsystem extends SubsystemBase {
   }
 
   public void runIntake(boolean intakeBtn,  boolean outtakeBtn){
-    if (intakeBtn == true  /*&& conveyorSensor.get() == false*/){
+    if (intakeBtn == true  && conveyorSensor.get() == false){
       intakeMotor.set(Constants.intakeMotorSpeed);
       if(true){  //if(intakeSensor.get() == true){ // Removed for limit switch concerns on 2/29 ~CR
         intakeIn = true;
@@ -106,7 +106,7 @@ public class BallTransitSubsystem extends SubsystemBase {
       countTime++;
       if (countTime > 50){
         shooterMotor.set(Constants.shooterMotorSpeed);
-        preShooterMotor.set(Constants.preShooterMotorSpeed); 
+        //preShooterMotor.set(Constants.preShooterMotorSpeed); 
         if (shooterSensor.get() == true){
           shooterRunning = false;
         }
@@ -123,7 +123,7 @@ public class BallTransitSubsystem extends SubsystemBase {
     else{
       shooterRunning = false;
       shooterMotor.set(0);
-      preShooterMotor.set(0);
+      //preShooterMotor.set(0);
       countTime = 0;
       shooterReverse = false;
     }
