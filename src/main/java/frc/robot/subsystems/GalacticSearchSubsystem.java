@@ -15,6 +15,8 @@ import edu.wpi.first.wpilibj.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard; 
+
 import frc.robot.Constants;
 
 import com.revrobotics.CANSparkMax;
@@ -82,6 +84,9 @@ public class GalacticSearchSubsystem extends SubsystemBase {
   public void periodic() {
     // Update the odometry in the periodic block
     m_odometry.update(m_gyro.getRotation2d(), leftDistance, rightDistance);
+    //test smartdashboard 
+    SmartDashboard.putNumber("Hood toggle button", leftMotorEncoder.getPosition());
+
   }
 
   /**

@@ -82,7 +82,7 @@ public class BallTransitSubsystem extends SubsystemBase {
   }
 
   public void runIntake(boolean intakeBtn,  boolean outtakeBtn){
-    if (intakeBtn == true  && conveyorSensor.get() == false){
+    if (intakeBtn == true){
       intakeMotor.set(Constants.intakeMotorSpeed);
       if(true){  //if(intakeSensor.get() == true){ // Removed for limit switch concerns on 2/29 ~CR
         intakeIn = true;
