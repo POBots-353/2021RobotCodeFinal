@@ -15,6 +15,8 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.AnalogPotentiometer;
+import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj.controller.RamseteController;
 import edu.wpi.first.wpilibj.controller.SimpleMotorFeedforward;
@@ -58,7 +60,16 @@ public class RobotContainer {
   public final static Joystick driverStick = new Joystick(Constants.driverStickPort);
   public final static Joystick operatorStick = new Joystick(Constants.operatorStickPort);
  
-  
+  //The robot's ultrasonic sensor is defined here
+  // Initializes an nalogInput on port 0, and enables 2-bit averaging
+  AnalogInput input = new AnalogInput(0);
+  //input.setAverageBits(2); WHY IS THIS WRONG
+
+// Initializes an AnalogPotentiometer with the given AnalogInput
+// The full range of motion (in meaningful external units) is 0-180 (this could be degrees, for instance)
+// The "starting point" of the motion, i.e. where the mechanism is located when the potentiometer reads 0v, is 30.
+
+  AnalogPotentiometer pot = new AnalogPotentiometer(input, 180, 30); //hehe pot ~ NS
 
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
