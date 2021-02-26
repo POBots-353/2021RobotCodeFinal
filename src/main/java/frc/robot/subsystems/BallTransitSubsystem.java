@@ -107,6 +107,7 @@ public class BallTransitSubsystem extends SubsystemBase {
       if (countTime > 50){
         shooterMotor.set(Constants.shooterMotorSpeed);
         //preShooterMotor.set(Constants.preShooterMotorSpeed); 
+        //use redlight to see if code even gets here or limelight
         if (shooterSensor.get() == true){
           shooterRunning = false;
         }
