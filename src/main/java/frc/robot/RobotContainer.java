@@ -60,10 +60,9 @@ public class RobotContainer {
   public final static Joystick driverStick = new Joystick(Constants.driverStickPort);
   public final static Joystick operatorStick = new Joystick(Constants.operatorStickPort);
  
-  //The robot's ultrasonic sensor is defined here
-  // Initializes an nalogInput on port 0, and enables 2-bit averaging
+      //The robot's ultrasonic sensor is defined here
+    // Initializes an nalogInput on port 0, and enables 2-bit averaging
   AnalogInput input = new AnalogInput(0);
-  //input.setAverageBits(2); WHY IS THIS WRONG
 
 // Initializes an AnalogPotentiometer with the given AnalogInput
 // The full range of motion (in meaningful external units) is 0-180 (this could be degrees, for instance)
@@ -110,6 +109,9 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
+
+    input.setAverageBits(2); 
+
     //pathweaver
     // Create a voltage constraint to ensure we don't accelerate too fast
     var autoVoltageConstraint = new DifferentialDriveVoltageConstraint(new SimpleMotorFeedforward(Constants.ksVolts
@@ -126,6 +128,15 @@ public class RobotContainer {
 
     // An example trajectory to follow.  All units in meters.
     //Change the path to the actual path in the computer
+    //put if statement here
+
+    pot.get();
+    //if (pot <= 830){
+
+    //}
+    //else{
+
+    //}
     String trajectoryJSON = "output/RedA.wpilib.json";
     Trajectory trajectory = new Trajectory();
     try {
