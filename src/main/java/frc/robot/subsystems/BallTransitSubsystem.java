@@ -24,7 +24,7 @@ public class BallTransitSubsystem extends SubsystemBase {
   public CANSparkMax conveyorMotor = new CANSparkMax(Constants.conveyorMotorDeviceID,MotorType.kBrushless);
   public CANSparkMax shooterMotor = new CANSparkMax(Constants.shooterMotorDeviceID,MotorType.kBrushless);
   /**What happens if we take out preshooter?**/
-  //public CANSparkMax preShooterMotor = new CANSparkMax(Constants.preShooterDeviceID, MotorType.kBrushless);
+  public CANSparkMax preShooterMotor = new CANSparkMax(Constants.preShooterDeviceID, MotorType.kBrushless);
   
   public DigitalInput shooterSensor = new DigitalInput(Constants.shooterLimitSwitch);
   public DigitalInput intakeSensor = new DigitalInput(Constants.intakeSensorNumber);
@@ -49,12 +49,22 @@ public class BallTransitSubsystem extends SubsystemBase {
      boolean conveyorDownBtn = RobotContainer.operatorStick.getRawButton(Constants.conveyorUpButtonNumber); //getRawButton
      boolean shootBtn = RobotContainer.operatorStick.getRawButtonPressed(Constants.shootButtonNumber);
 
+
+    if (shootBtn){
+      shooterMotor.set(Constants.shooterMotorSpeed);
+      preShooterMotor.set(Constants.preShooterMotorSpeed); 
+    }
+    else{
+      shooterMotor.set(0);
+      preShooterMotor.set(0); 
+    }
+    
     if(intakeBtn||outtakeBtn){
       runIntake(intakeBtn,outtakeBtn);
     }
 
     //if(shootBtn){
-      runShooter(shootBtn);
+    //  runShooter(shootBtn);
     //}
 
     if(conveyorUpBtn){ // these top 2 are simple conditional for if button for conveyor is pressed
@@ -101,7 +111,7 @@ public class BallTransitSubsystem extends SubsystemBase {
     }
 }
 
-  public void runShooter (boolean shootBtn){
+  /*public void runShooter (boolean shootBtn){
     if (shootBtn == true){
       countTime++;
       if (countTime > 50){
@@ -129,6 +139,5 @@ public class BallTransitSubsystem extends SubsystemBase {
       shooterReverse = false;
     }
   
+*/
 }
-}
-
