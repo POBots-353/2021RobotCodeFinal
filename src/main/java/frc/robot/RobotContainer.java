@@ -93,6 +93,7 @@ public class RobotContainer {
    * ({@link edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then
    * passing it to a {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
+
   private void configureButtonBindings() {
     JoystickButton autoNavStart = new JoystickButton(driverStick, Constants.autoNavButton);
     autoNavStart.whenPressed(new AutoNavCommand(driveSubsystem));
@@ -118,7 +119,7 @@ public class RobotContainer {
    *
    * @return the command to run in autonomous
    */
-
+//When recording, change the trajectoryJSON string from A to B when doing B paths, and vice versa. 
   public Command trajectoryRed() {
     var autoVoltageConstraint = new DifferentialDriveVoltageConstraint(new SimpleMotorFeedforward(Constants.ksVolts
     ,Constants.kvVoltSecondsPerMeter
@@ -214,17 +215,20 @@ public class RobotContainer {
   }
 
 public CANSparkMax intakeMotor = new CANSparkMax(Constants.intakeMotorDeviceID,MotorType.kBrushless);
+public CANSparkMax conveyorMotor = new CANSparkMax(Constants.conveyorMotorDeviceID,MotorType.kBrushless);
   public Command getAutonomousCommand() {
     
     input.setAverageBits(2); 
 
     double ultrasonicValue = pot.get();
-	  if (ultrasonicValue <= 830.0){
+	  if (ultrasonicValue <= 830.0){//Red
       intakeMotor.set(Constants.intakeMotorSpeed);
+      conveyorMotor.set(Constants.conveyorMotorSpeed);
       return trajectoryRed();
     }
-    else{
+    else{//Blue
       intakeMotor.set(Constants.intakeMotorSpeed);
+      conveyorMotor.set(Constants.conveyorMotorSpeed);
       return trajectoryBlue();
     }
     

@@ -52,11 +52,14 @@ public class AutoNavCommand extends CommandBase{
     //resets encoders
     rightMotorEncoder.setPosition(0);
     leftMotorEncoder.setPosition(0);
+    slalom();
   }
+
+  
 
   @Override
   public void execute() {
-    slalom();
+    //slalom();
   }
 
   public void slalom(){
