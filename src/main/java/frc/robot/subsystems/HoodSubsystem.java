@@ -44,6 +44,8 @@ public class HoodSubsystem extends SubsystemBase {
   double maxVel = 200; // rpm
   double maxAcc = 150;
   double setPoint, encoderPosition;
+  double max = 0;
+  double min = 0;
 
   public HoodSubsystem() {
     hoodMotor.restoreFactoryDefaults();
@@ -64,9 +66,11 @@ public class HoodSubsystem extends SubsystemBase {
     hoodMotorController.setSmartMotionAllowedClosedLoopError(allowedErr, smartMotionSlot);
     //SmartDashboard.putNumber("Set Position", 0);
     //SmartDashboard.putNumber("Set Velocity", 0);
+
   }
 @Override
   public void periodic() {
+
     if(hoodToggleState == 0 && RobotContainer.operatorStick.getRawButton(Constants.hoodRunBtnNum)){
       double ty = NetworkTableInstance.getDefault().getTable("limelight").getEntry("ty").getDouble(0);
       setPoint = ty; //regression to convert limelight to encoder value
@@ -81,11 +85,18 @@ public class HoodSubsystem extends SubsystemBase {
     else if(hoodToggleState == 3 && RobotContainer.operatorStick.getRawButton(Constants.hoodRunBtnNum)){
       setPoint = Constants.hoodAngle3;
     }
+    
+    encoderPosition = hoodMotorEncoder.getPosition();
+    if(encoderPosition >= max || encoderPosition <= min){ //hey make the max and min right
+      hoodMotor.set(0);
+    } 
+
     hoodMotorController.setReference(setPoint, ControlType.kPosition);
     
 
-    encoderPosition = hoodMotorEncoder.getPosition();
 
+
+    
 
     SmartDashboard.putNumber("Hood toggle position: ", hoodToggleState);
     SmartDashboard.putNumber("Encoder Position", encoderPosition);
