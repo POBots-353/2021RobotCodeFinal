@@ -81,7 +81,7 @@ public class AutoNavCommand extends CommandBase{
     double clicks = outerLength * 25;
 
     //turns until outer wheel travels the whole turn (speed will have to be adjusted for exact turn when we test)
-    while(rightClicks < clicks){
+    if (rightClicks < clicks){
       drive.tankDrive(0.3, 0.6);
     }
     
@@ -100,7 +100,7 @@ public class AutoNavCommand extends CommandBase{
     double clicks = outerLength * 25;
 
     //turns until outer wheel travels the whole turn (speed will have to be adjusted for exact turn when we test)
-    while(leftClicks < clicks){
+    if(leftClicks < clicks){
       drive.tankDrive(0.6, 0.3);
     }
     
@@ -119,7 +119,7 @@ public class AutoNavCommand extends CommandBase{
     double clicks = outerLength * 25;
 
     //turns until outer wheel travels the whole turn (speed will have to be adjusted for exact turn when we test)
-    while(rightClicks < clicks){
+    if(rightClicks < clicks){
       drive.tankDrive(0.3, 0.6);
     }
     
