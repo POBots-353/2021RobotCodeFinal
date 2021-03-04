@@ -48,20 +48,18 @@ public class AutoNavCommand extends CommandBase{
     // Use addRequirements() here to declare subsystem dependencies.
     driveSubsystem = subsystem;
     addRequirements(driveSubsystem);
-  }
 
-  
+    //resets encoders
+    rightMotorEncoder.setPosition(0);
+    leftMotorEncoder.setPosition(0);
+  }
 
   @Override
   public void execute() {
     slalom();
-    
   }
 
   public void slalom(){
-    //resets encoders
-    rightMotorEncoder.setPosition(0);
-    leftMotorEncoder.setPosition(0);
     
     //declares encoder objects to be passed into methods
     double encoderClicksLeft = leftMotorEncoder.getPosition();
@@ -88,10 +86,11 @@ public class AutoNavCommand extends CommandBase{
     if (rightClicks < clicks){
       drive.tankDrive(0.3, 0.6);
     }
-    
+    else{
     //resets encoder click counts for next method
     rightMotorEncoder.setPosition(0);
     leftMotorEncoder.setPosition(0);
+    }
   }
 
   //slalomLongSection is the second and second-to-last curve going around the long section of markers
@@ -107,10 +106,11 @@ public class AutoNavCommand extends CommandBase{
     if(leftClicks < clicks){
       drive.tankDrive(0.6, 0.3);
     }
-    
+    else{
     //resets encoder click counts for next method
     rightMotorEncoder.setPosition(0);
-    leftMotorEncoder.setPosition(0);
+    leftMotorEncoder.setPosition(0);      
+    }
   }
 
   //slalomCircle is the third turn, a circle around the marker farthest to the right
@@ -126,10 +126,11 @@ public class AutoNavCommand extends CommandBase{
     if(rightClicks < clicks){
       drive.tankDrive(0.3, 0.6);
     }
-    
+    else{
     //resets encoder click counts for next method
     rightMotorEncoder.setPosition(0);
-    leftMotorEncoder.setPosition(0);
+    leftMotorEncoder.setPosition(0);      
+    }
   }
 
   @Override
