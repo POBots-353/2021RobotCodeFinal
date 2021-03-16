@@ -222,6 +222,7 @@ public CANSparkMax conveyorMotor = new CANSparkMax(Constants.conveyorMotorDevice
 
     double ultrasonicValue = pot.get();
     boolean ultrasonicChecked = false;
+
     int choose = 0;
     //keeping for now, not sure
       //delay
@@ -248,5 +249,6 @@ public CANSparkMax conveyorMotor = new CANSparkMax(Constants.conveyorMotorDevice
     //pathweaver
     // Create a voltage constraint to ensure we don't accelerate too fast
 
+  
   }
 }
