@@ -47,7 +47,7 @@ public class BallTransitSubsystem extends SubsystemBase {
      boolean outtakeBtn = RobotContainer.operatorStick.getRawButtonPressed(Constants.outtakeButtonNumber); // was driverStick
      boolean conveyorUpBtn = RobotContainer.operatorStick.getRawButton(Constants.conveyorUpButtonNumber); //getRawButton
      boolean conveyorDownBtn = RobotContainer.operatorStick.getRawButton(Constants.conveyorUpButtonNumber); //getRawButton
-     boolean shootBtn = RobotContainer.operatorStick.getRawButtonPressed(Constants.shootButtonNumber);
+     boolean shootBtn = RobotContainer.operatorStick.getRawButton(Constants.shootButtonNumber); //3/16/2021 Changed to getRawButton to see if this was the issue ~NS
 
 
     if (shootBtn){

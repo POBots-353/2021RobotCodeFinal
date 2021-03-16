@@ -221,9 +221,20 @@ public CANSparkMax conveyorMotor = new CANSparkMax(Constants.conveyorMotorDevice
     input.setAverageBits(2); 
 
     double ultrasonicValue = pot.get();
-    boolean ultrasonicChecked = false;]
-    //keeping for now, not sure
-    while (!ultrasonicChecked){
+    boolean ultrasonicChecked = false;
+    if (ultrasonicValue <= 830.0){//Red
+      intakeMotor.set(Constants.intakeMotorSpeed);
+      conveyorMotor.set(Constants.conveyorMotorSpeed);
+      return trajectoryRed();
+    }
+    else{//Blue
+      intakeMotor.set(Constants.intakeMotorSpeed);
+      conveyorMotor.set(Constants.conveyorMotorSpeed);
+      return trajectoryBlue();
+
+
+    //There is a return statement when is is being made true, so this isn't going to work. Why did we listen to mandel~NS
+    /*while (!ultrasonicChecked){           
       //delay
       if (ultrasonicValue <= 830.0){//Red
         intakeMotor.set(Constants.intakeMotorSpeed);
@@ -235,12 +246,13 @@ public CANSparkMax conveyorMotor = new CANSparkMax(Constants.conveyorMotorDevice
         conveyorMotor.set(Constants.conveyorMotorSpeed);
         return trajectoryBlue();
       }
-      ultrasonicChecked = true;
-    } 
+      //ultrasonicChecked = true;
+    } */
 	  
     
     //pathweaver
     // Create a voltage constraint to ensure we don't accelerate too fast
 
+  }
   }
 }
