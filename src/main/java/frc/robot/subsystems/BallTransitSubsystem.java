@@ -48,6 +48,10 @@ public class BallTransitSubsystem extends SubsystemBase {
      boolean conveyorUpBtn = RobotContainer.operatorStick.getRawButton(Constants.conveyorUpButtonNumber); //getRawButton
      boolean conveyorDownBtn = RobotContainer.operatorStick.getRawButton(Constants.conveyorUpButtonNumber); //getRawButton
      boolean shootBtn = RobotContainer.operatorStick.getRawButton(Constants.shootButtonNumber); //3/16/2021 Changed to getRawButton to see if this was the issue ~NS
+     
+     //code written at 2 in the morning by NS so please review this
+     double shootSpeed = RobotContainer.operatorStick.getY();
+     shooterMotor.set(Constants.shooterMotorSpeed * shootSpeed); //Riley made drive with abs value this can only really turn only one way
 
 
     if (shootBtn){

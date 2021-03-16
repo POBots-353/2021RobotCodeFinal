@@ -107,7 +107,7 @@ public final class Constants {
 	public static double solenoidHoldTime = 2.0;
 	
 	//Constants for limit switch
-	public static int shooterLimitSwitch=0;
+	public static int shooterLimitSwitch = 0;
 
 	//Constants for Trajectory
 	// These characterization values MUST be determined either experimentally or theoretically
