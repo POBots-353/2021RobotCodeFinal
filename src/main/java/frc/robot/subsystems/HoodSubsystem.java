@@ -87,7 +87,7 @@ public class HoodSubsystem extends SubsystemBase {
     }
     
     encoderPosition = hoodMotorEncoder.getPosition();
-    if(encoderPosition >= max || encoderPosition <= min){ //hey make the max and min right
+    if(encoderPosition >= max || encoderPosition <= min){ 
       hoodMotor.set(0);
     } 
 

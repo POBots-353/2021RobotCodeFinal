@@ -221,16 +221,23 @@ public CANSparkMax conveyorMotor = new CANSparkMax(Constants.conveyorMotorDevice
     input.setAverageBits(2); 
 
     double ultrasonicValue = pot.get();
-	  if (ultrasonicValue <= 830.0){//Red
-      intakeMotor.set(Constants.intakeMotorSpeed);
-      conveyorMotor.set(Constants.conveyorMotorSpeed);
-      return trajectoryRed();
-    }
-    else{//Blue
-      intakeMotor.set(Constants.intakeMotorSpeed);
-      conveyorMotor.set(Constants.conveyorMotorSpeed);
-      return trajectoryBlue();
-    }
+    boolean ultrasonicChecked = false;]
+    //keeping for now, not sure
+    while (!ultrasonicChecked){
+      //delay
+      if (ultrasonicValue <= 830.0){//Red
+        intakeMotor.set(Constants.intakeMotorSpeed);
+        conveyorMotor.set(Constants.conveyorMotorSpeed);
+        return trajectoryRed();
+      }
+      else{//Blue
+        intakeMotor.set(Constants.intakeMotorSpeed);
+        conveyorMotor.set(Constants.conveyorMotorSpeed);
+        return trajectoryBlue();
+      }
+      ultrasonicChecked = true;
+    } 
+	  
     
     //pathweaver
     // Create a voltage constraint to ensure we don't accelerate too fast
