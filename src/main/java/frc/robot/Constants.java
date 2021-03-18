@@ -75,7 +75,7 @@ public final class Constants {
 	//public static int dropIntakeButtonNumber = 16; got rid of
 	public static int hoodToggleBtnNum = 5;
 	public static int hoodRunBtnNum = 10;
-;
+
 
 	//Constants for angular and linear alignment within AlignRobotCommand()
 	public static double kPAim = 0.025;
@@ -129,5 +129,13 @@ public final class Constants {
 	public static final double kMaxSpeedMetersPerSecond = 3;
 	public static final double kMaxAccelerationMetersPerSecondSquared = 3;
     public static final double kRamseteB = 2;
-    public static final double kRamseteZeta = 0.7;
+	public static final double kRamseteZeta = 0.7;
+	
+	//Teleop constant math
+	/**gravitational constant **/ 
+	public static final double g = -9.81; 
+	public static final double goalHeight1 = 0; //placeholder 
+	public static final double goalHeight2 = 0; //placeholder 
+	public static final double robotHeight = 0; //placeholder
+	
 }

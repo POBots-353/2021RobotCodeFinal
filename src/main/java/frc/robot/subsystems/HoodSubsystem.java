@@ -12,10 +12,12 @@ import com.revrobotics.CANPIDController;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.ControlType;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-
+import edu.wpi.first.wpilibj.AnalogPotentiometer;
+import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
 
@@ -66,11 +68,13 @@ public class HoodSubsystem extends SubsystemBase {
     hoodMotorController.setSmartMotionAllowedClosedLoopError(allowedErr, smartMotionSlot);
     //SmartDashboard.putNumber("Set Position", 0);
     //SmartDashboard.putNumber("Set Velocity", 0);
-
+    
   }
 @Override
   public void periodic() {
-
+    boolean moveHood = RobotContainer.operatorStick.getRawButtonPressed(Constants.hoodRunBtnNum); 
+     
+/*
     if(hoodToggleState == 0 && RobotContainer.operatorStick.getRawButton(Constants.hoodRunBtnNum)){
       double ty = NetworkTableInstance.getDefault().getTable("limelight").getEntry("ty").getDouble(0);
       setPoint = ty; //regression to convert limelight to encoder value
@@ -93,7 +97,7 @@ public class HoodSubsystem extends SubsystemBase {
 
     hoodMotorController.setReference(setPoint, ControlType.kPosition);
     
-
+*/ 
 
 
     

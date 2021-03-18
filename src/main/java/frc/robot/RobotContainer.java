@@ -59,12 +59,15 @@ public class RobotContainer {
   public final static BallTransitSubsystem transitSubsystem = new BallTransitSubsystem();
   public final static HoodSubsystem hood = new HoodSubsystem();
   public final static GalacticSearchSubsystem galactic = new GalacticSearchSubsystem();
+
   // public final static ColorWheelSubsytem colorWheelSubsystem = new
   // ColorWheelSubsytem();
 
   // The robot's joysticks are defined here
   public final static Joystick driverStick = new Joystick(Constants.driverStickPort);
   public final static Joystick operatorStick = new Joystick(Constants.operatorStickPort);
+  public int choose = 0;
+
 
   // The robot's ultrasonic sensor is defined here
   // Initializes an nalogInput on port 0, and enables 2-bit averaging
@@ -223,7 +226,6 @@ public CANSparkMax conveyorMotor = new CANSparkMax(Constants.conveyorMotorDevice
     double ultrasonicValue = pot.get();
     boolean ultrasonicChecked = false;
 
-    int choose = 0;
     //keeping for now, not sure
       //delay
     if (ultrasonicValue <= 830.0 && choose < 1){//Red
