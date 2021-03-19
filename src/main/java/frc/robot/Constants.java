@@ -84,9 +84,9 @@ public final class Constants {
 	public static double maxTurn = 0.25;
 	public static double minHeadingError = 0.25;
 	public static double minDistanceError = 0.50;
-	public static double position1 = -5.0;
-	public static double position2 = 0.0;
-	public static double position3 = 5.0;
+	public static double position = -5.0; //default value
+	//public static double position2 = 0.0;
+	//public static double position3 = 5.0;
 	// Constants to angle the hood
 	public static double hoodGear = 175;
 	public static double kPHoodAim = 0.294;
@@ -135,7 +135,7 @@ public final class Constants {
 	/**gravitational constant **/ 
 	public static final double g = -9.81; 
 	public static final double goalHeight1 = 0; //placeholder 
-	public static final double goalHeight2 = 0; //placeholder 
+	//public static final double goalHeight2 = 0; //placeholder 
 	public static final double robotHeight = 0; //placeholder
 	
 }

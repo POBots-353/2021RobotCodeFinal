@@ -28,7 +28,7 @@ public class HoodSubsystem extends SubsystemBase {
   public CANSparkMax hoodMotor = new CANSparkMax(Constants.hoodMotorDeviceID, MotorType.kBrushless);
   public CANPIDController hoodMotorController = hoodMotor.getPIDController();
   public CANEncoder hoodMotorEncoder = hoodMotor.getEncoder();
-
+  public static double tanTheta = 0;
   public int hoodToggleState;
 
 
@@ -74,7 +74,12 @@ public class HoodSubsystem extends SubsystemBase {
   public void periodic() {
     boolean moveHood = RobotContainer.operatorStick.getRawButtonPressed(Constants.hoodRunBtnNum); 
      
-/*
+    //assuming position is measured in meters
+    SmartDashboard.getNumber("Distance", Constants.position);
+    //This took 30minutes of Mr.Weilbacher to make
+    tanTheta = (((Constants.goalHeight1 - Constants.robotHeight)-(Constants.g * Constants.position)) - 1)/(Constants.g * Constants.position);
+    double angle = Math.atan(tanTheta);
+
     if(hoodToggleState == 0 && RobotContainer.operatorStick.getRawButton(Constants.hoodRunBtnNum)){
       double ty = NetworkTableInstance.getDefault().getTable("limelight").getEntry("ty").getDouble(0);
       setPoint = ty; //regression to convert limelight to encoder value
@@ -97,10 +102,9 @@ public class HoodSubsystem extends SubsystemBase {
 
     hoodMotorController.setReference(setPoint, ControlType.kPosition);
     
-*/ 
 
 
-    
+
 
     SmartDashboard.putNumber("Hood toggle position: ", hoodToggleState);
     SmartDashboard.putNumber("Encoder Position", encoderPosition);

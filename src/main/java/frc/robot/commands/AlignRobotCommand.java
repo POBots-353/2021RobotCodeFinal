@@ -13,6 +13,7 @@ import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.HoodSubsystem;
 //import frc.robot.subsystems.HoodSubsystem;
 import edu.wpi.first.networktables.*;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class AlignRobotCommand extends CommandBase {
   /**
@@ -25,6 +26,7 @@ public class AlignRobotCommand extends CommandBase {
   double tv;
   double distanceError;
   double headingError;
+  public static boolean stop = true;
   public AlignRobotCommand(DriveSubsystem d, HoodSubsystem h) {
     // Use addRequirements() here to declare subsystem dependencies.
     driveSubsystem = d;
@@ -35,6 +37,11 @@ public class AlignRobotCommand extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    //Puts on Dashboard
+    if (stop){
+      SmartDashboard.putNumber("Distance", Constants.position);
+      stop = false;
+    }
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -52,14 +59,15 @@ public class AlignRobotCommand extends CommandBase {
       distanceError = 0.0;
     }
     else if(hood.hoodToggleState == 1){
-      distanceError = Constants.position1 - ty;
+      distanceError = Constants.position - ty;
     }
-    else if(hood.hoodToggleState == 2){
+    //Don't need these if statments
+    /*else if(hood.hoodToggleState == 2){
       distanceError = Constants.position2 - ty;
     }
     else if(hood.hoodToggleState == 3){
       distanceError = Constants.position3 - ty;
-    }
+    }*/
     
     //proportional scaling of the move and turn variables
     double turn = headingError * Constants.kPAim;
