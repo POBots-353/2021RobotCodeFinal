@@ -76,7 +76,7 @@ public class HoodSubsystem extends SubsystemBase {
      
     //assuming position is measured in meters
     SmartDashboard.getNumber("Distance", Constants.position);
-    //This took 30minutes of Mr.Weilbacher to make
+    //This took 30minutes for Mr.Weilbacher to make(So its some complicated trig)
     tanTheta = (((Constants.goalHeight1 - Constants.robotHeight)-(Constants.g * Constants.position)) - 1)/(Constants.g * Constants.position);
     double angle = Math.atan(tanTheta);
 
