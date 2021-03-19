@@ -61,7 +61,7 @@ public class AlignRobotCommand extends CommandBase {
     else if(hood.hoodToggleState == 1){
       distanceError = Constants.position - ty;
     }
-    //Don't need these if statments
+    //We don't need these if statements
     /*else if(hood.hoodToggleState == 2){
       distanceError = Constants.position2 - ty;
     }
