@@ -62,7 +62,7 @@ public final class Constants {
 	public static int turboButtonNumber = 2;
 	public static int slowButtonNumber = 3;
 	public static int AutoAlignButtonNumber = 1;
-	public static int magicTurnButtonNumber = 4;
+	public static int magicTurnButtonNumber = 4; //not used anywhere
 	public static int autoNavButton = 10;
 
 	//Operator button constants
