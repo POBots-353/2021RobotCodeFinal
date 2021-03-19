@@ -39,7 +39,7 @@ public class AlignRobotCommand extends CommandBase {
   public void initialize() {
     //Puts on Dashboard
     if (stop){
-      SmartDashboard.putNumber("Distance", Constants.position);
+      SmartDashboard.putNumber("y-Position camera view(DO NOT PUT MORE THEN 5)", Constants.position);
       stop = false;
     }
   }
@@ -50,7 +50,7 @@ public class AlignRobotCommand extends CommandBase {
     tx = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getDouble(0);
     ty = NetworkTableInstance.getDefault().getTable("limelight").getEntry("ty").getDouble(0);
     tv = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tv").getDouble(0);
-    
+    SmartDashboard.getNumber("y-Position camera view(DO NOT PUT MORE THEN 5)", Constants.position);
     //sets the heading error to the opposite of the tx value of the limelight
     headingError = -tx;
     
