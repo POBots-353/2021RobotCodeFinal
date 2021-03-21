@@ -123,7 +123,7 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
 //When recording, change the trajectoryJSON string from A to B when doing B paths, and vice versa. 
-  public Command trajectoryRed() {
+  public Command trajectory(String path) {
     var autoVoltageConstraint = new DifferentialDriveVoltageConstraint(new SimpleMotorFeedforward(Constants.ksVolts
     ,Constants.kvVoltSecondsPerMeter
     ,Constants.kaVoltSecondsSquaredPerMeter)
@@ -138,54 +138,7 @@ public class RobotContainer {
 
     // An example trajectory to follow.  All units in meters.
     //Change the path to the actual path in the computer?
-    String trajectoryJSON = "output/RedA.wpilib.json";
-    Trajectory trajectory = new Trajectory();
-    try {
-      Path trajectoryPath = Filesystem.getDeployDirectory().toPath().resolve(trajectoryJSON);
-      trajectory = TrajectoryUtil.fromPathweaverJson(trajectoryPath);
-    } catch (IOException ex) {
-      DriverStation.reportError("Unable to open trajectory: " + trajectoryJSON, ex.getStackTrace());
-    }
-
-    RamseteCommand ramseteCommand = new RamseteCommand(
-        trajectory,
-        galactic::getPose,
-        new RamseteController(Constants.kRamseteB, Constants.kRamseteZeta),
-        new SimpleMotorFeedforward(Constants.ksVolts,
-        Constants.kvVoltSecondsPerMeter,
-        Constants.kaVoltSecondsSquaredPerMeter),
-        Constants.kDriveKinematics,
-        galactic::getWheelSpeeds,
-        new PIDController(Constants.kPDriveVel, 0, 0),
-        new PIDController(Constants.kPDriveVel, 0, 0),
-        // RamseteCommand passes volts to the callback
-        galactic::tankDriveVolts,
-        galactic
-    );
-
-    // Reset odometry to the starting pose of the trajectory.
-    galactic.resetOdometry(trajectory.getInitialPose());
-
-    // Run path following command, then stop at the end.
-    return ramseteCommand.andThen(() -> galactic.tankDriveVolts(0, 0));
-  }
-
-  public Command trajectoryBlue() {
-    var autoVoltageConstraint = new DifferentialDriveVoltageConstraint(new SimpleMotorFeedforward(Constants.ksVolts
-    ,Constants.kvVoltSecondsPerMeter
-    ,Constants.kaVoltSecondsSquaredPerMeter)
-    ,Constants.kDriveKinematics,10);
-
-    // Create config for trajectory
-    TrajectoryConfig config = new TrajectoryConfig(Constants.kMaxSpeedMetersPerSecond,Constants.kMaxAccelerationMetersPerSecondSquared)
-            // Add kinematics to ensure max speed is actually obeyed
-            .setKinematics(Constants.kDriveKinematics)
-            // Apply the voltage constraint
-            .addConstraint(autoVoltageConstraint);
-
-    // An example trajectory to follow.  All units in meters.
-    //Change the path to the actual path in the computer?
-    String trajectoryJSON = "output/BlueA.wpilib.json";
+    String trajectoryJSON = path;
     Trajectory trajectory = new Trajectory();
     try {
       Path trajectoryPath = Filesystem.getDeployDirectory().toPath().resolve(trajectoryJSON);
@@ -232,20 +185,20 @@ public CANSparkMax conveyorMotor = new CANSparkMax(Constants.conveyorMotorDevice
       intakeMotor.set(Constants.intakeMotorSpeed);
       conveyorMotor.set(Constants.conveyorMotorSpeed);
       choose = 1;
-       return trajectoryRed();
+       return trajectory("output/RedA.wpilib.json");
     }
     else if(choose < 1){//Blue
       intakeMotor.set(Constants.intakeMotorSpeed);
       conveyorMotor.set(Constants.conveyorMotorSpeed);
       choose = 2;
-      return trajectoryBlue();
+      return trajectory("output/BlueA.wpilib.json");
     }
 
 	  if (choose == 1){
-      return trajectoryBlue();
+      return trajectory("output/RedA.wpilib.json");
     }
     else if (choose == 2){
-      return trajectoryRed();
+      return trajectory("output/BlueA.wpilib.json");
     }
     return null;
     //pathweaver

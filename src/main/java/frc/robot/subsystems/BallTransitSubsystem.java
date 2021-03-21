@@ -34,6 +34,7 @@ public class BallTransitSubsystem extends SubsystemBase {
   public boolean intakeOut;
   public boolean shooterRunning;
   public int countTime;
+  //If the ball gets stuck or something
   public boolean shooterReverse;
 
   public BallTransitSubsystem() {

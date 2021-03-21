@@ -73,20 +73,22 @@ public class GalacticSearchSubsystem extends SubsystemBase {
     // Sets the distance per pulse for the encoders 
     //0.004267m
     leftMotorEncoder.setVelocityConversionFactor(conversionToMeters);
-    leftDistance = leftMotorEncoder.getPosition() * conversionToMeters;
-    rightDistance = rightMotorEncoder.getPosition() * conversionToMeters;
-
+    rightMotorEncoder.setVelocityConversionFactor(conversionToMeters);
+    leftMotorEncoder.setPosition(0);
+    rightMotorEncoder.setPosition(0);
     resetEncoders();
     m_odometry = new DifferentialDriveOdometry(m_gyro.getRotation2d());
   }
-
+  /**Returns position * meters**/
+  public double getConversionToMeters(CANEncoder thing) {
+    return thing.getPosition() * conversionToMeters;
+  }
   @Override
   public void periodic() {
     // Update the odometry in the periodic block
-    m_odometry.update(m_gyro.getRotation2d(), leftDistance, rightDistance);
+    m_odometry.update(m_gyro.getRotation2d(), getConversionToMeters(leftMotorEncoder), 
+    getConversionToMeters(rightMotorEncoder));
     //test smartdashboard 
-    SmartDashboard.putNumber("Hood toggle button", leftMotorEncoder.getPosition());
-
   }
 
   /**
@@ -103,7 +105,9 @@ public class GalacticSearchSubsystem extends SubsystemBase {
    * @return The current wheel speeds.
    */
   public DifferentialDriveWheelSpeeds getWheelSpeeds() {
-    return new DifferentialDriveWheelSpeeds(leftMotorEncoder.getVelocity(), rightMotorEncoder.getVelocity());
+    return new DifferentialDriveWheelSpeeds(
+      leftMotorEncoder.getVelocity() *conversionToMeters, 
+      rightMotorEncoder.getVelocity() * conversionToMeters);
   }
 
   /**
@@ -113,6 +117,8 @@ public class GalacticSearchSubsystem extends SubsystemBase {
    */
   public void resetOdometry(Pose2d pose) {
     resetEncoders();
+    leftMotorEncoder.setPosition(0);
+    rightMotorEncoder.setPosition(0);
     m_odometry.resetPosition(pose, m_gyro.getRotation2d());
   }
 

@@ -21,12 +21,16 @@ public class AlignRobotCommand extends CommandBase {
    */
   DriveSubsystem driveSubsystem;
   HoodSubsystem hood;
+  /**Horizontal Offset From Crosshair To Target (-27 degrees to 27 degrees)**/
   double tx;
+  /**	Vertical Offset From Crosshair 
+  To Target (-20.5 degrees to 20.5 degrees)**/
   double ty;
+  /** Whether the limelight has any valid targets (0 or 1) **/
   double tv;
   double distanceError;
-  double headingError;
-  public static boolean stop = true;
+  double headingError; 
+
   public AlignRobotCommand(DriveSubsystem d, HoodSubsystem h) {
     // Use addRequirements() here to declare subsystem dependencies.
     driveSubsystem = d;
@@ -37,11 +41,6 @@ public class AlignRobotCommand extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    //Puts on Dashboard
-    if (stop){
-      SmartDashboard.putNumber("y-Position camera view(DO NOT PUT MORE THEN 5)", Constants.position);
-      stop = false;
-    }
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -50,7 +49,7 @@ public class AlignRobotCommand extends CommandBase {
     tx = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getDouble(0);
     ty = NetworkTableInstance.getDefault().getTable("limelight").getEntry("ty").getDouble(0);
     tv = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tv").getDouble(0);
-    SmartDashboard.getNumber("y-Position camera view(DO NOT PUT MORE THEN 5)", Constants.position);
+    Constants.position = SmartDashboard.getNumber("y-Position camera view(DO NOT PUT MORE THAN 19)", -5);
     //sets the heading error to the opposite of the tx value of the limelight
     headingError = -tx;
     
@@ -58,7 +57,7 @@ public class AlignRobotCommand extends CommandBase {
     if(hood.hoodToggleState == 0){
       distanceError = 0.0;
     }
-    else if(hood.hoodToggleState == 1){
+    else if(hood.hoodToggleState >= 1){
       distanceError = Constants.position - ty;
     }
     //We don't need these if statements
@@ -68,7 +67,9 @@ public class AlignRobotCommand extends CommandBase {
     else if(hood.hoodToggleState == 3){
       distanceError = Constants.position3 - ty;
     }*/
-    
+    if (tv == 0){
+      distanceError = 0;
+    }
     //proportional scaling of the move and turn variables
     double turn = headingError * Constants.kPAim;
     double move = distanceError * Constants.kPDistance;

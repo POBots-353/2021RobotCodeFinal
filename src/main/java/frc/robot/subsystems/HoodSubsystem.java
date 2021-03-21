@@ -31,7 +31,6 @@ public class HoodSubsystem extends SubsystemBase {
   public static double tanTheta = 0;
   public int hoodToggleState;
 
-
   double kP = 0.294; 
   double kI = 0;
   double kD = 0; 
@@ -68,31 +67,26 @@ public class HoodSubsystem extends SubsystemBase {
     hoodMotorController.setSmartMotionAllowedClosedLoopError(allowedErr, smartMotionSlot);
     //SmartDashboard.putNumber("Set Position", 0);
     //SmartDashboard.putNumber("Set Velocity", 0);
-    
   }
 @Override
   public void periodic() {
-    boolean moveHood = RobotContainer.operatorStick.getRawButtonPressed(Constants.hoodRunBtnNum); 
-     
-    //assuming position is measured in meters
-    //This took 30minutes for Mr.Weilbacher to make(So its some complicated trig)
-    tanTheta = (((Constants.goalHeight1 - Constants.robotHeight)-(Constants.g * Constants.position)) - 1)/(Constants.g * Constants.position);
-    double angle = Math.atan(tanTheta);
+    //gets the hoodAngle from User
+    Constants.hoodAngle1 = SmartDashboard.getNumber("Hood value (less than 1)", 0);
 
-    if(hoodToggleState == 0 && RobotContainer.operatorStick.getRawButton(Constants.hoodRunBtnNum)){
+    /*if(hoodToggleState == 0 && RobotContainer.operatorStick.getRawButton(Constants.hoodRunBtnNum)){
       double ty = NetworkTableInstance.getDefault().getTable("limelight").getEntry("ty").getDouble(0);
       setPoint = ty; //regression to convert limelight to encoder value
     // anticipate arctan here 
-    }
-    else if(hoodToggleState == 1 && RobotContainer.operatorStick.getRawButton(Constants.hoodRunBtnNum)){
+    }*/
+    if(hoodToggleState >= 1 && RobotContainer.operatorStick.getRawButton(Constants.hoodRunBtnNum)){
       setPoint = Constants.hoodAngle1;
-    }
+    }/*
     else if(hoodToggleState == 2 && RobotContainer.operatorStick.getRawButton(Constants.hoodRunBtnNum)){
       setPoint = Constants.hoodAngle2;
     }
     else if(hoodToggleState == 3 && RobotContainer.operatorStick.getRawButton(Constants.hoodRunBtnNum)){
       setPoint = Constants.hoodAngle3;
-    }
+    }*/
     
     encoderPosition = hoodMotorEncoder.getPosition();
     if(encoderPosition >= max || encoderPosition <= min){ 
