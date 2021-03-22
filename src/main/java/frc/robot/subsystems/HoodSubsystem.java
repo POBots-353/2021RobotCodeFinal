@@ -79,7 +79,7 @@ public class HoodSubsystem extends SubsystemBase {
     // anticipate arctan here 
     }*/
     if(hoodToggleState >= 1 && RobotContainer.operatorStick.getRawButton(Constants.hoodRunBtnNum)){
-      setPoint = Constants.hoodAngle1;
+      setPoint = Constants.hoodAngle1 * Constants.hoodGear;
     }/*
     else if(hoodToggleState == 2 && RobotContainer.operatorStick.getRawButton(Constants.hoodRunBtnNum)){
       setPoint = Constants.hoodAngle2;
