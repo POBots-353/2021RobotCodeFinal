@@ -45,7 +45,7 @@ public final class Constants {
 	//CANSparkMax Motor Speeds
 	public static double intakeMotorSpeed = 0.5;
 	public static double conveyorMotorSpeed = 0.15;
-	public static double shooterMotorSpeed = 0.9;
+	public static double shooterMotorSpeed = -0.9;
 	public static double climberMotorSpeed = 0.3;
 	public static double preShooterMotorSpeed = .10 ;   //not actual speed, just placeholder 
 	//Spike Relay Number constants
@@ -84,7 +84,7 @@ public final class Constants {
 	public static double maxTurn = 0.25;
 	public static double minHeadingError = 0.25;
 	public static double minDistanceError = 0.50;
-	public static double position = -5.0; //default value
+	public static double position = -10; //default value
 	//public static double position2 = 0.0;
 	//public static double position3 = 5.0;
 	// Constants to angle the hood

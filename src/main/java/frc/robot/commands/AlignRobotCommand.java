@@ -49,7 +49,7 @@ public class AlignRobotCommand extends CommandBase {
     tx = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getDouble(0);
     ty = NetworkTableInstance.getDefault().getTable("limelight").getEntry("ty").getDouble(0);
     tv = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tv").getDouble(0);
-    Constants.position = SmartDashboard.getNumber("y-Position camera view(DO NOT PUT MORE THAN 19)", -5);
+    //Constants.position = SmartDashboard.getNumber("y-Position camera view(DO NOT PUT MORE THAN 19)", -5);
     //sets the heading error to the opposite of the tx value of the limelight
     headingError = -tx;
     

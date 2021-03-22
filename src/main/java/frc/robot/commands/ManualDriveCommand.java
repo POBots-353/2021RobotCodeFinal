@@ -8,6 +8,9 @@
 package frc.robot.commands;
 
 import frc.robot.subsystems.DriveSubsystem;
+import edu.wpi.first.wpilibj.AnalogInput;
+import edu.wpi.first.wpilibj.AnalogPotentiometer;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.*;
  
@@ -15,6 +18,8 @@ import frc.robot.*;
 public class ManualDriveCommand extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   private final DriveSubsystem driveSubsystem;
+  //AnalogInput input = new AnalogInput(0);
+ // AnalogPotentiometer pot = new AnalogPotentiometer(input, 180, 30);
 
   /**
    * Creates a new ExampleCommand.
@@ -39,7 +44,7 @@ public class ManualDriveCommand extends CommandBase {
     double turn = RobotContainer.driverStick.getX();
     
     driveSubsystem.manualDrive(move, turn, scaleConstant());    
-    
+    //SmartDashboard.putNumber("Pot", pot.get());
   }
 
   // Called once the command ends or is interrupted.

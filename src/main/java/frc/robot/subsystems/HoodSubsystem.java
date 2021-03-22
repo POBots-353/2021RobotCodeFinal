@@ -78,7 +78,7 @@ public class HoodSubsystem extends SubsystemBase {
       setPoint = ty; //regression to convert limelight to encoder value
     // anticipate arctan here 
     }*/
-    if(hoodToggleState >= 1 && RobotContainer.operatorStick.getRawButton(Constants.hoodRunBtnNum)){
+    if(hoodToggleState >= 1){
       setPoint = Constants.hoodAngle1 * Constants.hoodGear;
     }/*
     else if(hoodToggleState == 2 && RobotContainer.operatorStick.getRawButton(Constants.hoodRunBtnNum)){
@@ -93,7 +93,7 @@ public class HoodSubsystem extends SubsystemBase {
       hoodMotor.set(0);
     } 
 
-    hoodMotorController.setReference(setPoint, ControlType.kPosition);
+    hoodMotorController.setReference(0.5, ControlType.kPosition);
     
 
 
