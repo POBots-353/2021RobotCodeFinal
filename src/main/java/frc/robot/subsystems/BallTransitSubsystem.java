@@ -91,12 +91,12 @@ public class BallTransitSubsystem extends SubsystemBase {
     else if(intakeOut){
       conveyorMotor.set(Constants.conveyorMotorSpeed*-1);
     }
-    else if(shooterReverse){
+    /*else if(shooterReverse){
       conveyorMotor.set(Constants.conveyorMotorSpeed*-1);
     }
     else if(shooterRunning){
       conveyorMotor.set(Constants.conveyorMotorSpeed);
-    }
+    }*/
     else{
         conveyorMotor.set(0);
     }
