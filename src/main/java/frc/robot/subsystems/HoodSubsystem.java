@@ -41,7 +41,7 @@ public class HoodSubsystem extends SubsystemBase {
   // Smart Motion Coefficients
   double maxVel = 200; // rpm
   double maxAcc = 150;
-  double setPoint, encoderPosition;
+  double setPoint = 0, encoderPosition;
   double max = 0; //We never set these variables
   double min = 0;
   
@@ -65,13 +65,13 @@ public class HoodSubsystem extends SubsystemBase {
     hoodMotorController.setSmartMotionAllowedClosedLoopError(allowedErr, smartMotionSlot);
     //SmartDashboard.putNumber("Set Position", 0);
     //SmartDashboard.putNumber("Set Velocity", 0);
-    SmartDashboard.putNumber("Hood value (less than 1)", 0);
+    SmartDashboard.putNumber("Hood value", 0);
   }
 @Override
   public void periodic() {
     //gets the hoodAngle from User
     
-    Constants.hoodAngle1 = SmartDashboard.getNumber("Hood value (less than 1)", 0);
+    setPoint = SmartDashboard.getNumber("Hood value", 0);
 
     /*if(hoodToggleState == 0 && RobotContainer.operatorStick.getRawButton(Constants.hoodRunBtnNum)){
       double ty = NetworkTableInstance.getDefault().getTable("limelight").getEntry("ty").getDouble(0);
@@ -79,7 +79,7 @@ public class HoodSubsystem extends SubsystemBase {
     // anticipate arctan here 
     }*/
     //if(hoodToggleState >= 1){
-      setPoint = Constants.hoodAngle1;
+      //setPoint = Constants.hoodAngle1;
     //}
     /*
     else if(hoodToggleState == 2 && RobotContainer.operatorStick.getRawButton(Constants.hoodRunBtnNum)){
