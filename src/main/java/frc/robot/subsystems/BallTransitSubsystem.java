@@ -23,8 +23,8 @@ public class BallTransitSubsystem extends SubsystemBase {
   /**
    * Creates a new BallTransitSystem.
    */
-  //AnalogInput input = new AnalogInput(0);
-  //AnalogPotentiometer pot = new AnalogPotentiometer(input, 180, 30);
+  AnalogInput input = new AnalogInput(0);
+
   public CANSparkMax intakeMotor = new CANSparkMax(Constants.intakeMotorDeviceID,MotorType.kBrushless);
   public CANSparkMax conveyorMotor = new CANSparkMax(Constants.conveyorMotorDeviceID,MotorType.kBrushless);
   public CANSparkMax shooterMotor = new CANSparkMax(Constants.shooterMotorDeviceID,MotorType.kBrushless);
@@ -54,11 +54,13 @@ public class BallTransitSubsystem extends SubsystemBase {
      boolean conveyorUpBtn = RobotContainer.operatorStick.getRawButton(Constants.conveyorUpButtonNumber); //getRawButton
      boolean conveyorDownBtn = RobotContainer.operatorStick.getRawButton(Constants.conveyorUpButtonNumber); //getRawButton
      boolean shootBtn = RobotContainer.operatorStick.getRawButton(Constants.shootButtonNumber); //3/16/2021 Changed to getRawButton to see if this was the issue ~NS
-     //SmartDashboard.putNumber("Pot", pot.get());
      //code written at 2 in the morning by NS so please review this
      double shootSpeed = RobotContainer.operatorStick.getY();
      shooterMotor.set(Constants.shooterMotorSpeed * shootSpeed); //Riley made drive with abs value this can only really turn only one way
-
+    
+     double rawValue = input.getValue();
+     double currentDistance = rawValue * 0.125; //unit is currently scaled to cm
+     SmartDashboard.putNumber("Not Pot", currentDistance);
 
     if (shootBtn){
       shooterMotor.set(Constants.shooterMotorSpeed);

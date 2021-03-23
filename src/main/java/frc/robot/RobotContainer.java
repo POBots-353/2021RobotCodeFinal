@@ -71,15 +71,13 @@ public class RobotContainer {
 
   // The robot's ultrasonic sensor is defined here
   // Initializes an nalogInput on port 0, and enables 2-bit averaging
-  AnalogInput input = new AnalogInput(0);
+  private final AnalogInput input = new AnalogInput(0);
 
   // Initializes an AnalogPotentiometer with the given AnalogInput
   // The full range of motion (in meaningful external units) is 0-180 (this could
   // be degrees, for instance)
   // The "starting point" of the motion, i.e. where the mechanism is located when
   // the potentiometer reads 0v, is 30.
-
-  AnalogPotentiometer pot = new AnalogPotentiometer(input, 180, 30); // hehe pot ~ NS
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -175,13 +173,12 @@ public CANSparkMax conveyorMotor = new CANSparkMax(Constants.conveyorMotorDevice
   public Command getAutonomousCommand() {
     
     input.setAverageBits(2); 
-
-    double ultrasonicValue = pot.get();
-    boolean ultrasonicChecked = false;
+    double rawValue = input.getValue();
+    double currentDistance = rawValue * 0.125; //unit is currently scaled to cm
 
     //keeping for now, not sure
       //delay
-    if (ultrasonicValue <= 830.0 && choose < 1){//Red
+    if (currentDistance <= 500 && choose < 1){//Red
       intakeMotor.set(Constants.intakeMotorSpeed);
       conveyorMotor.set(Constants.conveyorMotorSpeed);
       choose = 1;
