@@ -12,8 +12,6 @@ import com.revrobotics.CANPIDController;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.ControlType;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-import edu.wpi.first.wpilibj.AnalogPotentiometer;
-import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -28,7 +26,6 @@ public class HoodSubsystem extends SubsystemBase {
   public CANSparkMax hoodMotor = new CANSparkMax(Constants.hoodMotorDeviceID, MotorType.kBrushless);
   public CANPIDController hoodMotorController = hoodMotor.getPIDController();
   public CANEncoder hoodMotorEncoder = hoodMotor.getEncoder();
-  public static double tanTheta = 0;
   public int hoodToggleState;
 
   double kP = 0.294; 
@@ -45,8 +42,9 @@ public class HoodSubsystem extends SubsystemBase {
   double maxVel = 200; // rpm
   double maxAcc = 150;
   double setPoint, encoderPosition;
-  double max = 0;
+  double max = 0; //We never set these variables
   double min = 0;
+  
 
   public HoodSubsystem() {
     hoodMotor.restoreFactoryDefaults();
@@ -67,10 +65,12 @@ public class HoodSubsystem extends SubsystemBase {
     hoodMotorController.setSmartMotionAllowedClosedLoopError(allowedErr, smartMotionSlot);
     //SmartDashboard.putNumber("Set Position", 0);
     //SmartDashboard.putNumber("Set Velocity", 0);
+    SmartDashboard.putNumber("Hood value (less than 1)", 0);
   }
 @Override
   public void periodic() {
     //gets the hoodAngle from User
+    
     Constants.hoodAngle1 = SmartDashboard.getNumber("Hood value (less than 1)", 0);
 
     /*if(hoodToggleState == 0 && RobotContainer.operatorStick.getRawButton(Constants.hoodRunBtnNum)){
@@ -89,11 +89,11 @@ public class HoodSubsystem extends SubsystemBase {
     }*/
     
     encoderPosition = hoodMotorEncoder.getPosition();
-    if(encoderPosition >= max || encoderPosition <= min){ 
+    /*if(encoderPosition >= max || encoderPosition <= min){ 
       hoodMotor.set(0);
-    } 
+    } */
 
-    hoodMotorController.setReference(0.5, ControlType.kPosition);
+    hoodMotorController.setReference(setPoint, ControlType.kPosition);
     
 
 
