@@ -23,13 +23,13 @@ public class BallTransitSubsystem extends SubsystemBase {
   /**
    * Creates a new BallTransitSystem.
    */
-  AnalogInput input = new AnalogInput(0);
+  //AnalogInput input = new AnalogInput(0);
 
   public CANSparkMax intakeMotor = new CANSparkMax(Constants.intakeMotorDeviceID,MotorType.kBrushless);
   public CANSparkMax conveyorMotor = new CANSparkMax(Constants.conveyorMotorDeviceID,MotorType.kBrushless);
   public CANSparkMax shooterMotor = new CANSparkMax(Constants.shooterMotorDeviceID,MotorType.kBrushless);
   /**What happens if we take out preshooter?**/
-  
+  public CANSparkMax preShooterMotor = new CANSparkMax(Constants.preShooterDeviceID, MotorType.kBrushless);
   
   public DigitalInput shooterSensor = new DigitalInput(Constants.shooterLimitSwitch);
   public DigitalInput intakeSensor = new DigitalInput(Constants.intakeSensorNumber);
@@ -58,17 +58,17 @@ public class BallTransitSubsystem extends SubsystemBase {
      double shootSpeed = RobotContainer.operatorStick.getY();
      shooterMotor.set(Constants.shooterMotorSpeed * shootSpeed); //Riley made drive with abs value this can only really turn only one way
     
-     double rawValue = input.getValue();
-     double currentDistance = rawValue * 0.125; //unit is currently scaled to cm
-     SmartDashboard.putNumber("Not Pot", currentDistance);
+     //double rawValue = input.getValue();
+     //double currentDistance = rawValue * 0.125; //unit is currently scaled to cm
+     //SmartDashboard.putNumber("Not Pot", currentDistance);
 
     if (shootBtn){
       shooterMotor.set(Constants.shooterMotorSpeed);
-      //preShooterMotor.set(Constants.preShooterMotorSpeed); 
+      preShooterMotor.set(Constants.preShooterMotorSpeed); 
     }
     else{
       shooterMotor.set(0);
-      //preShooterMotor.set(0); 
+      preShooterMotor.set(0); 
     }
     
     if(intakeBtn||outtakeBtn){

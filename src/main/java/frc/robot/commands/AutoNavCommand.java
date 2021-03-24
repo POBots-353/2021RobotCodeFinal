@@ -42,24 +42,24 @@ public class AutoNavCommand extends CommandBase{
 
 
   private final DriveSubsystem driveSubsystem;
-  Gyro gyro = new ADXRS450_Gyro(SPI.Port.kMXP);
+  //Gyro gyro = new ADXRS450_Gyro(SPI.Port.kMXP);
 
   public AutoNavCommand(DriveSubsystem subsystem) {
     // Use addRequirements() here to declare subsystem dependencies.
     driveSubsystem = subsystem;
-    addRequirements(driveSubsystem);
-
     //resets encoders
     rightMotorEncoder.setPosition(0);
     leftMotorEncoder.setPosition(0);
-    slalom();
+    //slalom();
+    
+    addRequirements(driveSubsystem);
   }
 
   
 
   @Override
   public void execute() {
-    //slalom();
+    slalom();
   }
 
   public void slalom(){
@@ -74,6 +74,7 @@ public class AutoNavCommand extends CommandBase{
     slalomCircle(encoderClicksRight);
     slalomLongSection(encoderClicksLeft);
     slalomEnterExit(encoderClicksRight);
+    
   }
 
   //slalomEnterExit is the first and last curve (they are equal) going out and in the start and finish

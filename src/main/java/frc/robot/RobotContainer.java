@@ -59,7 +59,7 @@ public class RobotContainer {
   public final static BallTransitSubsystem transitSubsystem = new BallTransitSubsystem();
   public final static HoodSubsystem hood = new HoodSubsystem();
   public final static GalacticSearchSubsystem galactic = new GalacticSearchSubsystem();
-
+  public final static AutoNavCommand autoNav = new AutoNavCommand(driveSubsystem);
   // public final static ColorWheelSubsytem colorWheelSubsystem = new
   // ColorWheelSubsytem();
 

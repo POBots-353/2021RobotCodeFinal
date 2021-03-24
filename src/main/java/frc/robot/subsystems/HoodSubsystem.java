@@ -35,12 +35,12 @@ public class HoodSubsystem extends SubsystemBase {
   double kFF = 0.000156; 
   double kMaxOutput = 1; 
   double kMinOutput = -1;
-  double maxRPM = 570;
+  double maxRPM = 25; //570
   double allowedErr = 0;
   double minVel = 0;
   // Smart Motion Coefficients
-  double maxVel = 200; // rpm
-  double maxAcc = 150;
+  double maxVel = 5; // rpm
+  double maxAcc = 1;
   double setPoint = 0, encoderPosition;
   double max = 0; //We never set these variables
   double min = 0;
