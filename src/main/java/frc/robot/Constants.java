@@ -84,7 +84,7 @@ public final class Constants {
 	public static double maxTurn = 0.25;
 	public static double minHeadingError = 0.25;
 	public static double minDistanceError = 0.50;
-	public static double position = -10; //default value
+	public static double position = -5; //default value
 	//public static double position2 = 0.0;
 	//public static double position3 = 5.0;
 	// Constants to angle the hood

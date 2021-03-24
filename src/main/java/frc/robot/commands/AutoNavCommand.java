@@ -79,14 +79,6 @@ public class AutoNavCommand extends CommandBase{
     // I need to figure out where to put them to make them public also bc I need them to exist everywehre so I can update all of them in the methods and also not need to return them 
 
     //calls each method passing in the encoders where needed
-<<<<<<< HEAD
-    slalomEnterExit(encoderClicksRight);
-    slalomLongSection(encoderClicksLeft);
-    slalomCircle(encoderClicksRight);
-    slalomLongSection(encoderClicksLeft);
-    slalomEnterExit(encoderClicksRight);
-    
-=======
     
     if(circleGo == true){
       slalomCircle(encoderClicksRight);
@@ -103,7 +95,6 @@ public class AutoNavCommand extends CommandBase{
     else if(exitGo == true){
       slalomEnterExitSecond(encoderClicksRight);
     }
->>>>>>> bfd9749f2362bc8aa3cb35535c350b0402a3ff5c
   }
 
   //slalomEnterExit is the first and last curve (they are equal) going out and in the start and finish

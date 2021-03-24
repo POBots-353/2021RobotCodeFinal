@@ -24,14 +24,14 @@ public class BallTransitSubsystem extends SubsystemBase {
   /**
    * Creates a new BallTransitSystem.
    */
-  //AnalogInput input = new AnalogInput(0);
+  //public static AnalogInput input = new AnalogInput(0);
 
   public CANSparkMax intakeMotor = new CANSparkMax(Constants.intakeMotorDeviceID,MotorType.kBrushless);
   public CANSparkMax conveyorMotor = new CANSparkMax(Constants.conveyorMotorDeviceID,MotorType.kBrushless);
   public CANSparkMax shooterMotor = new CANSparkMax(Constants.shooterMotorDeviceID,MotorType.kBrushless);
   public CANEncoder ShooterMotorEnconder = shooterMotor.getEncoder();
   /**What happens if we take out preshooter?**/
-  public CANSparkMax preShooterMotor = new CANSparkMax(Constants.preShooterDeviceID, MotorType.kBrushless);
+  //public CANSparkMax preShooterMotor = new CANSparkMax(Constants.preShooterDeviceID, MotorType.kBrushless);
   
   public DigitalInput shooterSensor = new DigitalInput(Constants.shooterLimitSwitch);
   public DigitalInput intakeSensor = new DigitalInput(Constants.intakeSensorNumber);
@@ -58,43 +58,17 @@ public class BallTransitSubsystem extends SubsystemBase {
      boolean shootBtn = RobotContainer.operatorStick.getRawButton(Constants.shootButtonNumber); //3/16/2021 Changed to getRawButton to see if this was the issue ~NS
      //code written at 2 in the morning by NS so please review this
     
-<<<<<<< HEAD
      //double rawValue = input.getValue();
      //double currentDistance = rawValue * 0.125; //unit is currently scaled to cm
      //SmartDashboard.putNumber("Not Pot", currentDistance);
-=======
-     double rawValue = input.getValue();
-     double currentDistance = rawValue * 0.125; //unit is currently scaled to cm
-     SmartDashboard.putNumber("Not Pot", currentDistance);
-     /**RPM / 60 to get RPS
-      * Then mulitipied 0.0254 times pi times 6 to get the amount of meters per rotation
-      * Gets the velocity of shooter**/
-     double velocityOfShooter = (ShooterMotorEnconder.getVelocity()/60) * (0.0254 * (Math.PI * 6));
->>>>>>> parent of 534c64b (Update BallTransitSubsystem.java)
 
     if (shootBtn){
-<<<<<<< HEAD
       shooterMotor.set(Constants.shooterMotorSpeed);
-      preShooterMotor.set(Constants.preShooterMotorSpeed); 
-=======
-      shoot += 1;
-      //copied from hood command
-      shoot %= 5;
-    }
-    if (shoot == 1){
-      shooterMotor.set(setShooterSpeed(1.524));
       //preShooterMotor.set(Constants.preShooterMotorSpeed); 
-    }else if (shoot == 2){
-      shooterMotor.set(setShooterSpeed(3.048));
-    }else if(shoot == 3){
-      shooterMotor.set(setShooterSpeed(4.572));
-    }else if (shoot == 4){
-      shooterMotor.set(setShooterSpeed(6.096));
->>>>>>> bfd9749f2362bc8aa3cb35535c350b0402a3ff5c
     }
     else{
       shooterMotor.set(0);
-      preShooterMotor.set(0); 
+      //preShooterMotor.set(0); 
     }
     
     if(intakeBtn||outtakeBtn){

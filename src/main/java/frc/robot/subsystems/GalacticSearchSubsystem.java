@@ -60,13 +60,9 @@ public class GalacticSearchSubsystem extends SubsystemBase {
   //private final Encoder m_rightEncoder = new Encoder(Constants.rightFrontMotorDeviceID, Constants.rightRearMotorDeviceID, false);
   
   // The gyro sensor
-<<<<<<< HEAD
   //Fix this
   Gyro m_gyro = new ADXRS450_Gyro();
 
-=======
-  private final Gyro m_gyro = new ADXRS450_Gyro(/*SPI.Port.kMXP*/);
->>>>>>> bfd9749f2362bc8aa3cb35535c350b0402a3ff5c
   // Odometry class for tracking robot pose
   private final DifferentialDriveOdometry m_odometry;
   public double leftDistance;
