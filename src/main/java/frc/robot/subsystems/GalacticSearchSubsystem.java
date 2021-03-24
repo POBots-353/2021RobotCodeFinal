@@ -14,9 +14,10 @@ import edu.wpi.first.wpilibj.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
+import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard; 
-
+//import edu.wpi.first.wpilibj.SPI;
 import frc.robot.Constants;
 
 import com.revrobotics.CANSparkMax;
@@ -59,9 +60,13 @@ public class GalacticSearchSubsystem extends SubsystemBase {
   //private final Encoder m_rightEncoder = new Encoder(Constants.rightFrontMotorDeviceID, Constants.rightRearMotorDeviceID, false);
   
   // The gyro sensor
+<<<<<<< HEAD
   //Fix this
   Gyro m_gyro = new ADXRS450_Gyro();
 
+=======
+  private final Gyro m_gyro = new ADXRS450_Gyro(/*SPI.Port.kMXP*/);
+>>>>>>> bfd9749f2362bc8aa3cb35535c350b0402a3ff5c
   // Odometry class for tracking robot pose
   private final DifferentialDriveOdometry m_odometry;
   public double leftDistance;
