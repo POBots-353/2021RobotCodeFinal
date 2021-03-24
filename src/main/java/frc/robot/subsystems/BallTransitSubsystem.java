@@ -7,6 +7,7 @@
 
 package frc.robot.subsystems;
 
+import com.revrobotics.CANEncoder;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
@@ -28,6 +29,7 @@ public class BallTransitSubsystem extends SubsystemBase {
   public CANSparkMax intakeMotor = new CANSparkMax(Constants.intakeMotorDeviceID,MotorType.kBrushless);
   public CANSparkMax conveyorMotor = new CANSparkMax(Constants.conveyorMotorDeviceID,MotorType.kBrushless);
   public CANSparkMax shooterMotor = new CANSparkMax(Constants.shooterMotorDeviceID,MotorType.kBrushless);
+  public CANEncoder ShooterMotorEnconder = shooterMotor.getEncoder();
   /**What happens if we take out preshooter?**/
   
   
@@ -41,7 +43,7 @@ public class BallTransitSubsystem extends SubsystemBase {
   public int countTime;
   //If the ball gets stuck or something
   public boolean shooterReverse;
-
+  public static int shoot = 0;
   public BallTransitSubsystem() {
 
   }
@@ -49,22 +51,35 @@ public class BallTransitSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-     boolean intakeBtn = RobotContainer.operatorStick.getRawButtonPressed(Constants.intakeButtonNumber); // was driverStick
-     boolean outtakeBtn = RobotContainer.operatorStick.getRawButtonPressed(Constants.outtakeButtonNumber); // was driverStick
+     boolean intakeBtn = RobotContainer.operatorStick.getRawButton(Constants.intakeButtonNumber); // was driverStick
+     boolean outtakeBtn = RobotContainer.operatorStick.getRawButton(Constants.outtakeButtonNumber); // was driverStick
      boolean conveyorUpBtn = RobotContainer.operatorStick.getRawButton(Constants.conveyorUpButtonNumber); //getRawButton
      boolean conveyorDownBtn = RobotContainer.operatorStick.getRawButton(Constants.conveyorUpButtonNumber); //getRawButton
      boolean shootBtn = RobotContainer.operatorStick.getRawButton(Constants.shootButtonNumber); //3/16/2021 Changed to getRawButton to see if this was the issue ~NS
      //code written at 2 in the morning by NS so please review this
-     double shootSpeed = RobotContainer.operatorStick.getY();
-     shooterMotor.set(Constants.shooterMotorSpeed * shootSpeed); //Riley made drive with abs value this can only really turn only one way
     
      double rawValue = input.getValue();
      double currentDistance = rawValue * 0.125; //unit is currently scaled to cm
      SmartDashboard.putNumber("Not Pot", currentDistance);
+     /**RPM / 60 to get RPS
+      * Then mulitipied 0.0254 times pi times 6 to get the amount of meters per rotation
+      * Gets the velocity of shooter**/
+     double velocityOfShooter = (ShooterMotorEnconder.getVelocity()/60) * (0.0254 * (Math.PI * 6));
 
     if (shootBtn){
-      shooterMotor.set(Constants.shooterMotorSpeed);
+      shoot += 1;
+      //copied from hood command
+      shoot %= 5;
+    }
+    if (shoot == 1){
+      shooterMotor.set(setShooterSpeed(1.524));
       //preShooterMotor.set(Constants.preShooterMotorSpeed); 
+    }else if (shoot == 2){
+      shooterMotor.set(setShooterSpeed(3.048));
+    }else if(shoot == 3){
+      shooterMotor.set(setShooterSpeed(4.572));
+    }else if (shoot == 4){
+      shooterMotor.set(setShooterSpeed(6.096));
     }
     else{
       shooterMotor.set(0);
@@ -102,7 +117,10 @@ public class BallTransitSubsystem extends SubsystemBase {
     }
 
   }
-
+  public double setShooterSpeed(double distance){
+    double velocityNeed = Math.sqrt((9.81 * Math.pow(distance, 2)) / (Math.cos(60 * 60) * ((Constants.goalHeight1 - Constants.robotHeight) + distance * Math.tan(60))));
+    return velocityNeed/39.898;
+  }
   public void runIntake(boolean intakeBtn,  boolean outtakeBtn){
     if (intakeBtn == true){
       intakeMotor.set(Constants.intakeMotorSpeed);
