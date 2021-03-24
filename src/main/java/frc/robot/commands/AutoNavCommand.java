@@ -55,7 +55,13 @@ public class AutoNavCommand extends CommandBase{
     slalom();
   }
 
-  
+  //fields to switch which methods run when
+  public boolean enterGo = true;
+  public boolean exitGo = false;
+  public boolean longUpGo = false;
+  public boolean longDownGo = false;
+  public boolean circleGo = false;
+
 
   @Override
   public void execute() {
@@ -68,51 +74,70 @@ public class AutoNavCommand extends CommandBase{
     double encoderClicksLeft = leftMotorEncoder.getPosition();
     double encoderClicksRight = rightMotorEncoder.getPosition();
 
+    //  we have to find somewhere to put the variables outside of here so the periodic method doesn't constantly reset them
+
+    // I need to figure out where to put them to make them public also bc I need them to exist everywehre so I can update all of them in the methods and also not need to return them 
+
     //calls each method passing in the encoders where needed
-    slalomEnterExit(encoderClicksRight);
-    slalomLongSection(encoderClicksLeft);
-    slalomCircle(encoderClicksRight);
-    slalomLongSection(encoderClicksLeft);
-    slalomEnterExit(encoderClicksRight);
+    
+    if(circleGo == true){
+      slalomCircle(encoderClicksRight);
+    }
+    else if(longUpGo == true){
+      slalomLongSectionFirst(encoderClicksLeft);
+    }
+    else if(longDownGo == true){
+      slalomLongSectionSecond(encoderClicksLeft);
+    }
+    else if(enterGo == true){
+      slalomEnterExitFirst(encoderClicksRight);
+    }
+    else if(exitGo == true){
+      slalomEnterExitSecond(encoderClicksRight);
+    }
   }
 
   //slalomEnterExit is the first and last curve (they are equal) going out and in the start and finish
-  public void slalomEnterExit(double rightClicks){
+  public void slalomEnterExitFirst(double rightClicks){
 
     //physics math for turn in radians, radius of turn (in.), get length outer wheel travels (in.) and converts to amount of encoder clicks
     double theta = Math.PI/2;
-    double radius = 30;
+    double radius = 57; //inner radius 30 in, outer 57 in (robot width 27 in)
     double outerLength = theta * radius;
     double clicks = outerLength * 25;
 
-    //turns until outer wheel travels the whole turn (speed will have to be adjusted for exact turn when we test)
+    //turns until outer wheel travels the whole turn
     if (rightClicks < clicks){
-      drive.tankDrive(0.3, 0.6);
+      drive.tankDrive(0.3, 0.57);
     }
     else{
     //resets encoder click counts for next method
-    rightMotorEncoder.setPosition(0);
-    leftMotorEncoder.setPosition(0);
+      rightMotorEncoder.setPosition(0);
+      leftMotorEncoder.setPosition(0);
+      enterGo = false;
+      longUpGo = true;
     }
   }
 
   //slalomLongSection is the second and second-to-last curve going around the long section of markers
-  public void slalomLongSection(double leftClicks){
+  public void slalomLongSectionFirst(double leftClicks){
 
     //physics math for turn in radians, radius of turn (in.), get length outer wheel travels (in.) and converts to amount of encoder clicks
     double theta = Math.PI;
-    double radius = 60;
+    double radius = 87; //inner radius 60 in, outer 87 in
     double outerLength = theta * radius;
     double clicks = outerLength * 25;
 
     //turns until outer wheel travels the whole turn (speed will have to be adjusted for exact turn when we test)
     if(leftClicks < clicks){
-      drive.tankDrive(0.6, 0.3);
+      drive.tankDrive(0.435, 0.3);
     }
     else{
     //resets encoder click counts for next method
-    rightMotorEncoder.setPosition(0);
-    leftMotorEncoder.setPosition(0);      
+      rightMotorEncoder.setPosition(0);
+      leftMotorEncoder.setPosition(0);
+      longUpGo = false;
+      circleGo = true;
     }
   }
 
@@ -121,18 +146,62 @@ public class AutoNavCommand extends CommandBase{
 
     //physics math for turn in radians, radius of turn (in.), get length outer wheel travels (in.) and converts to amount of encoder clicks
     double theta = 2 * Math.PI;
-    double radius = 30;
+    double radius = 57; //inner radius 30 in, outer radius 57 in
+    double outerLength = theta * radius;
+    double clicks = outerLength * 25;
+
+    //turns until outer wheel travels the whole turn
+    if(rightClicks < clicks){
+      drive.tankDrive(0.3, 0.57);
+    }
+    else{
+    //resets encoder click counts for next method
+      rightMotorEncoder.setPosition(0);
+      leftMotorEncoder.setPosition(0);
+      circleGo = false;
+      longDownGo = true;
+    }
+  }
+
+  //slalomLongSection is the second and second-to-last curve going around the long section of markers
+  public void slalomLongSectionSecond(double leftClicks){
+
+    //physics math for turn in radians, radius of turn (in.), get length outer wheel travels (in.) and converts to amount of encoder clicks
+    double theta = Math.PI;
+    double radius = 87; //inner radius 60 in, outer 87 in
     double outerLength = theta * radius;
     double clicks = outerLength * 25;
 
     //turns until outer wheel travels the whole turn (speed will have to be adjusted for exact turn when we test)
-    if(rightClicks < clicks){
-      drive.tankDrive(0.3, 0.6);
+    if(leftClicks < clicks){
+      drive.tankDrive(0.435, 0.3);
     }
     else{
     //resets encoder click counts for next method
-    rightMotorEncoder.setPosition(0);
-    leftMotorEncoder.setPosition(0);      
+      rightMotorEncoder.setPosition(0);
+      leftMotorEncoder.setPosition(0);
+      longDownGo = false;
+      exitGo = true;
+    }
+  }
+
+  public void slalomEnterExitSecond(double rightClicks){
+
+    //physics math for turn in radians, radius of turn (in.), get length outer wheel travels (in.) and converts to amount of encoder clicks
+    double theta = Math.PI/2;
+    double radius = 57; //inner radius 30 in, outer 57 in (robot width 27 in)
+    double outerLength = theta * radius;
+    double clicks = outerLength * 25;
+
+    //turns until outer wheel travels the whole turn
+    if (rightClicks < clicks){
+      drive.tankDrive(0.3, 0.57);
+    }
+    else{
+    //resets encoder click counts for next method
+      rightMotorEncoder.setPosition(0);
+      leftMotorEncoder.setPosition(0);
+      exitGo = false;
     }
   }
 
@@ -140,4 +209,5 @@ public class AutoNavCommand extends CommandBase{
   public boolean isFinished() {
     return false;
   }
+
 }
