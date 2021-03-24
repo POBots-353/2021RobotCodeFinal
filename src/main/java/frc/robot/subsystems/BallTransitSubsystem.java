@@ -11,7 +11,6 @@ import com.revrobotics.CANEncoder;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
-import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.AnalogPotentiometer;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -35,6 +34,7 @@ public class BallTransitSubsystem extends SubsystemBase {
   
   public DigitalInput shooterSensor = new DigitalInput(Constants.shooterLimitSwitch);
   public DigitalInput intakeSensor = new DigitalInput(Constants.intakeSensorNumber);
+
   //public DigitalInput conveyorSensor = new DigitalInput(Constants.conveyorSensorNumber); removed conveyorSensor, not sure if it will work
 
   public boolean intakeIn;
