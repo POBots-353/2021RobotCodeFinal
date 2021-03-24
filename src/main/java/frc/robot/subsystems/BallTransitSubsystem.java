@@ -61,10 +61,6 @@ public class BallTransitSubsystem extends SubsystemBase {
      double rawValue = input.getValue();
      double currentDistance = rawValue * 0.125; //unit is currently scaled to cm
      SmartDashboard.putNumber("Not Pot", currentDistance);
-     /**RPM / 60 to get RPS
-      * Then mulitipied 0.0254 times pi times 6 to get the amount of meters per rotation
-      * Gets the velocity of shooter**/
-     double velocityOfShooter = (ShooterMotorEnconder.getVelocity()/60) * (0.0254 * (Math.PI * 6));
 
     if (shootBtn){
       shoot += 1;
