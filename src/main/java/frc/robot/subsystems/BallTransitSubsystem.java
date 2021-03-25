@@ -11,7 +11,6 @@ import com.revrobotics.CANEncoder;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
-import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.AnalogPotentiometer;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -35,6 +34,7 @@ public class BallTransitSubsystem extends SubsystemBase {
   
   public DigitalInput shooterSensor = new DigitalInput(Constants.shooterLimitSwitch);
   public DigitalInput intakeSensor = new DigitalInput(Constants.intakeSensorNumber);
+
   //public DigitalInput conveyorSensor = new DigitalInput(Constants.conveyorSensorNumber); removed conveyorSensor, not sure if it will work
 
   public boolean intakeIn;
@@ -78,13 +78,18 @@ public class BallTransitSubsystem extends SubsystemBase {
     //if(shootBtn){
     //  runShooter(shootBtn);
     //}
-
+    //Comment this out
     if(conveyorUpBtn){ // these top 2 are simple conditional for if button for conveyor is pressed
       conveyorMotor.set(Constants.conveyorMotorSpeed);
     }
     else if(conveyorDownBtn){
       conveyorMotor.set(Constants.conveyorMotorSpeed*-1);
     }
+    //To here
+    //uncomment this
+    /*if (intakeIn && intakeOut){
+      conveyorMotor.set(0);
+    }*/
     else if(intakeIn){ // these next three respond to global querries to run conveyor, could be ors but style
       conveyorMotor.set(Constants.conveyorMotorSpeed);
     }
@@ -107,7 +112,14 @@ public class BallTransitSubsystem extends SubsystemBase {
     return velocityNeed/39.898;
   }
   public void runIntake(boolean intakeBtn,  boolean outtakeBtn){
-    if (intakeBtn == true){
+    //Uncomment this
+    /*if (intakeBtn && outtakeBtn){
+      intakeMotor.set(0);
+      intakeIn = false;
+      intakeOut = false;
+    }*/
+    //Uncomment this
+    /*else */if (intakeBtn == true){
       intakeMotor.set(Constants.intakeMotorSpeed);
       if(true){  //if(intakeSensor.get() == true){ // Removed for limit switch concerns on 2/29 ~CR
         intakeIn = true;

@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.AnalogGyro;
+import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard; 
 //import edu.wpi.first.wpilibj.SPI;
@@ -61,7 +62,7 @@ public class GalacticSearchSubsystem extends SubsystemBase {
   
   // The gyro sensor
   //Fix this
-  Gyro m_gyro = new ADXRS450_Gyro();
+  Gyro m_gyro = new ADXRS450_Gyro(/*SPI.Port.kMXP*/);
 
   // Odometry class for tracking robot pose
   private final DifferentialDriveOdometry m_odometry;
