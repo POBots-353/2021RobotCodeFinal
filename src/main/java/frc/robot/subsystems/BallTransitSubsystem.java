@@ -68,7 +68,7 @@ public class BallTransitSubsystem extends SubsystemBase {
     }
     else{
       shooterMotor.set(0);
-      //preShooterMotor.set(0); 
+     // preShooterMotor.set(0); 
     }
     
     if(intakeBtn||outtakeBtn){
@@ -79,19 +79,20 @@ public class BallTransitSubsystem extends SubsystemBase {
     //  runShooter(shootBtn);
     //}
     //Comment this out
-    if(conveyorUpBtn){ // these top 2 are simple conditional for if button for conveyor is pressed
+    /*if(conveyorUpBtn){ // these top 2 are simple conditional for if button for conveyor is pressed
       conveyorMotor.set(Constants.conveyorMotorSpeed);
     }
     else if(conveyorDownBtn){
       conveyorMotor.set(Constants.conveyorMotorSpeed*-1);
-    }
+    }*/
     //To here
     //uncomment this
-    /*if (intakeIn && intakeOut){
+    if (intakeIn && intakeOut){
       conveyorMotor.set(0);
-    }*/
+    }
     else if(intakeIn){ // these next three respond to global querries to run conveyor, could be ors but style
       conveyorMotor.set(Constants.conveyorMotorSpeed);
+      //preShooterMotor.set(Constants.conveyorMotorSpeed);
     }
     else if(intakeOut){
       conveyorMotor.set(Constants.conveyorMotorSpeed*-1);
@@ -108,18 +109,18 @@ public class BallTransitSubsystem extends SubsystemBase {
 
   }
   public double setShooterSpeed(double distance){
-    double velocityNeed = Math.sqrt((9.81 * Math.pow(distance, 2)) / (Math.cos(60 * 60) * ((Constants.goalHeight1 - Constants.robotHeight) + distance * Math.tan(60))));
+    double velocityNeed = Math.sqrt((9.81 * Math.pow(.6, 2)) / (Math.cos(60 * 60) * ((Constants.goalHeight1 - Constants.robotHeight) + .6 * Math.tan(60))));
     return velocityNeed/39.898;
   }
   public void runIntake(boolean intakeBtn,  boolean outtakeBtn){
     //Uncomment this
-    /*if (intakeBtn && outtakeBtn){
+    if (intakeBtn && outtakeBtn){
       intakeMotor.set(0);
       intakeIn = false;
       intakeOut = false;
-    }*/
+    }
     //Uncomment this
-    /*else */if (intakeBtn == true){
+    else if (intakeBtn == true){
       intakeMotor.set(Constants.intakeMotorSpeed);
       if(true){  //if(intakeSensor.get() == true){ // Removed for limit switch concerns on 2/29 ~CR
         intakeIn = true;

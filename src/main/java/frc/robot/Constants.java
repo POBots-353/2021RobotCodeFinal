@@ -40,14 +40,14 @@ public final class Constants {
 	public static int shooterMotorDeviceID = 8;
 	public static int climberMotorDeviceID = 5;
 	public static int hoodMotorDeviceID = 10; 
-	public static int preShooterDeviceID = 9; //new 
+	public static int preShooterDeviceID = 8; //new 
 
 	//CANSparkMax Motor Speeds
 	public static double intakeMotorSpeed = 0.5;
-	public static double conveyorMotorSpeed = 0.15;
+	public static double conveyorMotorSpeed = 0.25;
 	public static double shooterMotorSpeed = -0.9;
 	public static double climberMotorSpeed = 0.3;
-	public static double preShooterMotorSpeed = .10 ;   //not actual speed, just placeholder 
+	public static double preShooterMotorSpeed = .30 ;   //not actual speed, just placeholder 
 	//Spike Relay Number constants
 	//public static int intakeSpikeNumber = 1;
 
@@ -71,7 +71,8 @@ public final class Constants {
 	public static int outtakeButtonNumber = 14;
 	public static int conveyorUpButtonNumber = 12;
 	public static int conveyorDownButtonNumber = 15;
-	public static int climberUpButtonNumber = 4;			
+	public static int climberUpButtonNumber = 4;
+
 	//public static int dropIntakeButtonNumber = 16; got rid of
 	public static int hoodToggleBtnNum = 5;
 	public static int hoodRunBtnNum = 10;
@@ -134,8 +135,8 @@ public final class Constants {
 	//Teleop constant math
 	/**gravitational constant **/ 
 	public static final double g = -9.81; 
-	public static final double goalHeight1 = 0; //placeholder 
+	public static final double goalHeight1 = 8; //placeholder 
 	//public static final double goalHeight2 = 0; //placeholder 
-	public static final double robotHeight = 0; //placeholder
+	public static final double robotHeight = 1.016; //placeholder
 	
 }
