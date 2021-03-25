@@ -18,6 +18,10 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
+import edu.wpi.first.wpilibj.ADXRS450_Gyro;
+import edu.wpi.first.wpilibj.AnalogInput;
+import edu.wpi.first.wpilibj.SPI;
+import edu.wpi.first.wpilibj.interfaces.Gyro;
 
 public class HoodSubsystem extends SubsystemBase {
   /*
@@ -46,6 +50,8 @@ public class HoodSubsystem extends SubsystemBase {
   double max = 0; //We never set these variables
   double min = 0;
   
+  public final Gyro m_gyro = new ADXRS450_Gyro(SPI.Port.kOnboardCS0);
+  public final AnalogInput input = new AnalogInput(1);
 
   public HoodSubsystem() {
     hoodMotor.restoreFactoryDefaults();
@@ -67,11 +73,13 @@ public class HoodSubsystem extends SubsystemBase {
     //SmartDashboard.putNumber("Set Position", 0);
     //SmartDashboard.putNumber("Set Velocity", 0);
     SmartDashboard.putNumber("Hood value", 0);
+    m_gyro.calibrate(); 
   }
 @Override
   public void periodic() {
     //gets the hoodAngle from User
-    
+    SmartDashboard.putNumber("Gyro", m_gyro.getAngle());
+    SmartDashboard.putNumber("Ultrasonic", input.getValue() * .125);
     setPoint = SmartDashboard.getNumber("Hood value", 0);
 
     /*if(hoodToggleState == 0 && RobotContainer.operatorStick.getRawButton(Constants.hoodRunBtnNum)){
