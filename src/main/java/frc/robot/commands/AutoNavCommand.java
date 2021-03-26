@@ -16,7 +16,7 @@ import frc.robot.RobotContainer;
 
 public class AutoNavCommand extends CommandBase{
 
-  //***** --------------- BEGIN CANSPARKMAX DRIVE CODE --------------- *****
+  /*//***** --------------- BEGIN CANSPARKMAX DRIVE CODE --------------- *****
  
   //* Creates a CANSparkMax varible leftFrontMotor, leftRearMotor, rightFrontMotor, and rightRearMotor that are all MotorType kBrushless *
   //*** These are all constructors of the CANSparkMax class and take two parameters CANSparkMax(int, int)  being the port number and the motor type***
@@ -34,25 +34,29 @@ public class AutoNavCommand extends CommandBase{
   //* Creates a DifferentialDrive variable drive that pairs the leftMotorGroup and rightMotorGroup to take two parameters to drive (move and turn) *
   //*** This creates an instance of the class DifferentialDrive(motor, motor) and allows us to access any methods within that class ***
   public DifferentialDrive drive = new DifferentialDrive(leftMotorGroup,rightMotorGroup);
-
-  public CANEncoder leftMotorEncoder = leftFrontMotor.getEncoder();
-  public CANEncoder rightMotorEncoder = rightFrontMotor.getEncoder();
+ */
   
   //***** --------------- END CANSPARKMAX DRIVE CODE --------------- *****
 
 
   private final DriveSubsystem driveSubsystem;
-  Gyro gyro = new ADXRS450_Gyro(SPI.Port.kMXP);
+  //Gyro gyro = new ADXRS450_Gyro(SPI.Port.kMXP);
+  
+  public CANEncoder leftMotorEncoder; 
+  public CANEncoder rightMotorEncoder;
 
   public AutoNavCommand(DriveSubsystem subsystem) {
     // Use addRequirements() here to declare subsystem dependencies.
     driveSubsystem = subsystem;
     addRequirements(driveSubsystem);
 
+    leftMotorEncoder = driveSubsystem.leftFrontMotor.getEncoder();
+    rightMotorEncoder = driveSubsystem.rightFrontMotor.getEncoder();
+    
     //resets encoders
     rightMotorEncoder.setPosition(0);
     leftMotorEncoder.setPosition(0);
-    slalom();
+    //slalom();
   }
 
   //fields to switch which methods run when
@@ -65,7 +69,7 @@ public class AutoNavCommand extends CommandBase{
 
   @Override
   public void execute() {
-    //slalom();
+    slalom(); //THIS WASN'T HERE IT WASN'T UPDATING
   }
 
   public void slalom(){
@@ -73,10 +77,6 @@ public class AutoNavCommand extends CommandBase{
     //declares encoder objects to be passed into methods
     double encoderClicksLeft = leftMotorEncoder.getPosition();
     double encoderClicksRight = rightMotorEncoder.getPosition();
-
-    //  we have to find somewhere to put the variables outside of here so the periodic method doesn't constantly reset them
-
-    // I need to figure out where to put them to make them public also bc I need them to exist everywehre so I can update all of them in the methods and also not need to return them 
 
     //calls each method passing in the encoders where needed
     
