@@ -62,7 +62,7 @@ public class GalacticSearchSubsystem extends SubsystemBase {
   
   // The gyro sensor
   //Fix this
-  Gyro m_gyro = new ADXRS450_Gyro(/*SPI.Port.kMXP*/);
+  Gyro m_gyro = new ADXRS450_Gyro(SPI.Port.kOnboardCS1);
 
   // Odometry class for tracking robot pose
   private final DifferentialDriveOdometry m_odometry;
