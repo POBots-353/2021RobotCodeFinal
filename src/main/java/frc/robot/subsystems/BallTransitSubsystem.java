@@ -30,7 +30,6 @@ public class BallTransitSubsystem extends SubsystemBase {
   public CANSparkMax shooterMotor = new CANSparkMax(Constants.shooterMotorDeviceID,MotorType.kBrushless);
   public CANEncoder ShooterMotorEnconder = shooterMotor.getEncoder();
   /**What happens if we take out preshooter?**/
-  //public CANSparkMax preShooterMotor = new CANSparkMax(Constants.preShooterDeviceID, MotorType.kBrushless);
   
   public DigitalInput shooterSensor = new DigitalInput(Constants.shooterLimitSwitch);
   public DigitalInput intakeSensor = new DigitalInput(Constants.intakeSensorNumber);
@@ -66,11 +65,9 @@ public class BallTransitSubsystem extends SubsystemBase {
 
     if (shootBtn){
       shooterMotor.set(Constants.shooterMotorSpeed);
-      //preShooterMotor.set(Constants.preShooterMotorSpeed); 
     }
     else{
       shooterMotor.set(0);
-     // preShooterMotor.set(0); 
     }
     //Comment this out
     if(intakeBtn||outtakeBtn){

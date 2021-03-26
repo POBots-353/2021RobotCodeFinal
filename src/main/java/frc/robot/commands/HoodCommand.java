@@ -45,7 +45,6 @@ public class HoodCommand extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    
     return RobotContainer.operatorStick.getRawButton(Constants.hoodToggleBtnNum);
   }
 }

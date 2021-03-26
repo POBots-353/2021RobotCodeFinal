@@ -71,7 +71,7 @@ public class RobotContainer {
 
   // The robot's ultrasonic sensor is defined here
   // Initializes an nalogInput on port 0, and enables 2-bit averaging
-  private final AnalogInput input = new AnalogInput(0);
+  public AnalogInput ultraSonic = new AnalogInput(1);
 
   // Initializes an AnalogPotentiometer with the given AnalogInput
   // The full range of motion (in meaningful external units) is 0-180 (this could
@@ -172,8 +172,8 @@ public CANSparkMax intakeMotor = new CANSparkMax(Constants.intakeMotorDeviceID,M
 public CANSparkMax conveyorMotor = new CANSparkMax(Constants.conveyorMotorDeviceID,MotorType.kBrushless);
   public Command getAutonomousCommand() {
     
-    input.setAverageBits(2); 
-    double rawValue = input.getValue();
+    ultraSonic.setAverageBits(2); 
+    double rawValue = ultraSonic.getValue();
     double currentDistance = rawValue * 0.125; //unit is currently scaled to cm
 
     //keeping for now, not sure

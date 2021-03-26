@@ -27,7 +27,7 @@ public class HoodSubsystem extends SubsystemBase {
   /*
    * Creates a new HoodSubsystem.
    */
-  
+  //Not using Hood
   public CANSparkMax hoodMotor = new CANSparkMax(Constants.hoodMotorDeviceID, MotorType.kBrushless);
   public CANPIDController hoodMotorController = hoodMotor.getPIDController();
   public CANEncoder hoodMotorEncoder = hoodMotor.getEncoder();
