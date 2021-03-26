@@ -1,18 +1,18 @@
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.interfaces.Gyro;
-import edu.wpi.first.wpilibj.SPI;
+//import edu.wpi.first.wpilibj.interfaces.Gyro;
+//import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.DriveSubsystem;
 //import edu.wpi.first.wpilibj.GyroBase;
-import edu.wpi.first.wpilibj.ADXRS450_Gyro;
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+//import edu.wpi.first.wpilibj.ADXRS450_Gyro;
+//import com.revrobotics.CANSparkMax;
+//import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.CANEncoder;
-import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-import edu.wpi.first.wpilibj.SpeedControllerGroup;
-import frc.robot.Constants;
-import frc.robot.RobotContainer;
+//import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+//import edu.wpi.first.wpilibj.SpeedControllerGroup;
+//import frc.robot.Constants;
+//import frc.robot.RobotContainer;
 
 public class AutoNavCommand extends CommandBase{
 
@@ -90,15 +90,15 @@ public class AutoNavCommand extends CommandBase{
       slalomLongSectionSecond(encoderClicksLeft);
     }
     else if(enterGo == true){
-      slalomEnterExitFirst(encoderClicksRight);
+      slalomEnter(encoderClicksRight);
     }
     else if(exitGo == true){
-      slalomEnterExitSecond(encoderClicksRight);
+      slalomExit(encoderClicksRight);
     }
   }
 
   //slalomEnterExit is the first and last curve (they are equal) going out and in the start and finish
-  public void slalomEnterExitFirst(double rightClicks){
+  public void slalomEnter(double rightClicks){
 
     //physics math for turn in radians, radius of turn (in.), get length outer wheel travels (in.) and converts to amount of encoder clicks
     double theta = Math.PI/2;
@@ -108,7 +108,7 @@ public class AutoNavCommand extends CommandBase{
 
     //turns until outer wheel travels the whole turn
     if (rightClicks < clicks){
-      drive.tankDrive(0.3, 0.57);
+      driveSubsystem.drive.tankDrive(0.3, 0.57);
     }
     else{
     //resets encoder click counts for next method
@@ -130,7 +130,7 @@ public class AutoNavCommand extends CommandBase{
 
     //turns until outer wheel travels the whole turn (speed will have to be adjusted for exact turn when we test)
     if(leftClicks < clicks){
-      drive.tankDrive(0.435, 0.3);
+      driveSubsystem.drive.tankDrive(0.435, 0.3);
     }
     else{
     //resets encoder click counts for next method
@@ -152,7 +152,7 @@ public class AutoNavCommand extends CommandBase{
 
     //turns until outer wheel travels the whole turn
     if(rightClicks < clicks){
-      drive.tankDrive(0.3, 0.57);
+      driveSubsystem.drive.tankDrive(0.3, 0.57);
     }
     else{
     //resets encoder click counts for next method
@@ -174,7 +174,7 @@ public class AutoNavCommand extends CommandBase{
 
     //turns until outer wheel travels the whole turn (speed will have to be adjusted for exact turn when we test)
     if(leftClicks < clicks){
-      drive.tankDrive(0.435, 0.3);
+      driveSubsystem.drive.tankDrive(0.435, 0.3);
     }
     else{
     //resets encoder click counts for next method
@@ -185,7 +185,7 @@ public class AutoNavCommand extends CommandBase{
     }
   }
 
-  public void slalomEnterExitSecond(double rightClicks){
+  public void slalomExit(double rightClicks){
 
     //physics math for turn in radians, radius of turn (in.), get length outer wheel travels (in.) and converts to amount of encoder clicks
     double theta = Math.PI/2;
@@ -195,7 +195,7 @@ public class AutoNavCommand extends CommandBase{
 
     //turns until outer wheel travels the whole turn
     if (rightClicks < clicks){
-      drive.tankDrive(0.3, 0.57);
+      driveSubsystem.drive.tankDrive(0.3, 0.57);
     }
     else{
     //resets encoder click counts for next method

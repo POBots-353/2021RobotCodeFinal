@@ -11,7 +11,6 @@ import com.revrobotics.CANEncoder;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
-import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.AnalogPotentiometer;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -24,17 +23,18 @@ public class BallTransitSubsystem extends SubsystemBase {
   /**
    * Creates a new BallTransitSystem.
    */
-  AnalogInput input = new AnalogInput(0);
+  //public static AnalogInput input = new AnalogInput(0);
 
   public CANSparkMax intakeMotor = new CANSparkMax(Constants.intakeMotorDeviceID,MotorType.kBrushless);
   public CANSparkMax conveyorMotor = new CANSparkMax(Constants.conveyorMotorDeviceID,MotorType.kBrushless);
   public CANSparkMax shooterMotor = new CANSparkMax(Constants.shooterMotorDeviceID,MotorType.kBrushless);
   public CANEncoder ShooterMotorEnconder = shooterMotor.getEncoder();
   /**What happens if we take out preshooter?**/
-  
+  //public CANSparkMax preShooterMotor = new CANSparkMax(Constants.preShooterDeviceID, MotorType.kBrushless);
   
   public DigitalInput shooterSensor = new DigitalInput(Constants.shooterLimitSwitch);
   public DigitalInput intakeSensor = new DigitalInput(Constants.intakeSensorNumber);
+
   //public DigitalInput conveyorSensor = new DigitalInput(Constants.conveyorSensorNumber); removed conveyorSensor, not sure if it will work
 
   public boolean intakeIn;
@@ -58,28 +58,17 @@ public class BallTransitSubsystem extends SubsystemBase {
      boolean shootBtn = RobotContainer.operatorStick.getRawButton(Constants.shootButtonNumber); //3/16/2021 Changed to getRawButton to see if this was the issue ~NS
      //code written at 2 in the morning by NS so please review this
     
-     double rawValue = input.getValue();
-     double currentDistance = rawValue * 0.125; //unit is currently scaled to cm
-     SmartDashboard.putNumber("Not Pot", currentDistance);
+     //double rawValue = input.getValue();
+     //double currentDistance = rawValue * 0.125; //unit is currently scaled to cm
+     //SmartDashboard.putNumber("Not Pot", currentDistance);
 
     if (shootBtn){
-      shoot += 1;
-      //copied from hood command
-      shoot %= 5;
-    }
-    if (shoot == 1){
-      shooterMotor.set(setShooterSpeed(1.524));
+      shooterMotor.set(Constants.shooterMotorSpeed);
       //preShooterMotor.set(Constants.preShooterMotorSpeed); 
-    }else if (shoot == 2){
-      shooterMotor.set(setShooterSpeed(3.048));
-    }else if(shoot == 3){
-      shooterMotor.set(setShooterSpeed(4.572));
-    }else if (shoot == 4){
-      shooterMotor.set(setShooterSpeed(6.096));
     }
     else{
       shooterMotor.set(0);
-      //preShooterMotor.set(0); 
+     // preShooterMotor.set(0); 
     }
     
     if(intakeBtn||outtakeBtn){
@@ -89,15 +78,21 @@ public class BallTransitSubsystem extends SubsystemBase {
     //if(shootBtn){
     //  runShooter(shootBtn);
     //}
-
-    if(conveyorUpBtn){ // these top 2 are simple conditional for if button for conveyor is pressed
+    //Comment this out
+    /*if(conveyorUpBtn){ // these top 2 are simple conditional for if button for conveyor is pressed
       conveyorMotor.set(Constants.conveyorMotorSpeed);
     }
     else if(conveyorDownBtn){
       conveyorMotor.set(Constants.conveyorMotorSpeed*-1);
+    }*/
+    //To here
+    //uncomment this
+    if (intakeIn && intakeOut){
+      conveyorMotor.set(0);
     }
     else if(intakeIn){ // these next three respond to global querries to run conveyor, could be ors but style
       conveyorMotor.set(Constants.conveyorMotorSpeed);
+      //preShooterMotor.set(Constants.conveyorMotorSpeed);
     }
     else if(intakeOut){
       conveyorMotor.set(Constants.conveyorMotorSpeed*-1);
@@ -114,11 +109,18 @@ public class BallTransitSubsystem extends SubsystemBase {
 
   }
   public double setShooterSpeed(double distance){
-    double velocityNeed = Math.sqrt((9.81 * Math.pow(distance, 2)) / (Math.cos(60 * 60) * ((Constants.goalHeight1 - Constants.robotHeight) + distance * Math.tan(60))));
+    double velocityNeed = Math.sqrt((9.81 * Math.pow(.6, 2)) / (Math.cos(60 * 60) * ((Constants.goalHeight1 - Constants.robotHeight) + .6 * Math.tan(60))));
     return velocityNeed/39.898;
   }
   public void runIntake(boolean intakeBtn,  boolean outtakeBtn){
-    if (intakeBtn == true){
+    //Uncomment this
+    if (intakeBtn && outtakeBtn){
+      intakeMotor.set(0);
+      intakeIn = false;
+      intakeOut = false;
+    }
+    //Uncomment this
+    else if (intakeBtn == true){
       intakeMotor.set(Constants.intakeMotorSpeed);
       if(true){  //if(intakeSensor.get() == true){ // Removed for limit switch concerns on 2/29 ~CR
         intakeIn = true;
