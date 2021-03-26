@@ -70,12 +70,12 @@ public class BallTransitSubsystem extends SubsystemBase {
       shooterMotor.set(0);
     }
     //Comment this out
-    if(intakeBtn||outtakeBtn){
+    /*if(intakeBtn||outtakeBtn){
       runIntake(intakeBtn,outtakeBtn);
-    }
+    }*/
     //to here
     //Uncomment
-    /*if (intakeBtnReleased){
+    if (intakeBtnReleased){
       conveyorMotor.set(0);
       intakeMotor.set(0);
     }else if (outtakeBtnReleased){
@@ -91,9 +91,9 @@ public class BallTransitSubsystem extends SubsystemBase {
     }else{
       conveyorMotor.set(0);
       intakeMotor.set(0);
-    }*/
+    }
     //comment this out
-    if (intakeIn && intakeOut){
+    /*if (intakeIn && intakeOut){
       conveyorMotor.set(0);
     }
     else if(intakeIn){ // these next three respond to global querries to run conveyor, could be ors but style
@@ -107,13 +107,13 @@ public class BallTransitSubsystem extends SubsystemBase {
     }
     else if(shooterRunning){
       conveyorMotor.set(Constants.conveyorMotorSpeed);
-    }*/
+    }
     else{
         conveyorMotor.set(0);
-    }
+    }*/
 
   }
-  public double setShooterSpeed(double distance){
+  /*public double setShooterSpeed(double distance){
     double velocityNeed = Math.sqrt((9.81 * Math.pow(.6, 2)) / (Math.cos(60 * 60) * ((Constants.goalHeight1 - Constants.robotHeight) + .6 * Math.tan(60))));
     return velocityNeed/39.898;
   }
@@ -142,7 +142,7 @@ public class BallTransitSubsystem extends SubsystemBase {
       intakeIn = false;
       intakeOut = false;
     }
-}
+}*/
 
   /*public void runShooter (boolean shootBtn){
     if (shootBtn == true){

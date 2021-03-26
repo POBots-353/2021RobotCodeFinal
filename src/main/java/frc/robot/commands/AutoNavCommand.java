@@ -1,5 +1,6 @@
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 //import edu.wpi.first.wpilibj.interfaces.Gyro;
 //import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj2.command.CommandBase;
@@ -45,7 +46,12 @@ public class AutoNavCommand extends CommandBase{
   
   public CANEncoder leftMotorEncoder; 
   public CANEncoder rightMotorEncoder;
-
+  //fields to switch which methods run when
+  public boolean enterGo = true;
+  public boolean exitGo = false;
+  public boolean longUpGo = false;
+  public boolean longDownGo = false;
+  public boolean circleGo = false;
   public AutoNavCommand(DriveSubsystem subsystem) {
     // Use addRequirements() here to declare subsystem dependencies.
     driveSubsystem = subsystem;
@@ -60,43 +66,43 @@ public class AutoNavCommand extends CommandBase{
     //slalom();
   }
 
-  //fields to switch which methods run when
-  public boolean enterGo = true;
-  public boolean exitGo = false;
-  public boolean longUpGo = false;
-  public boolean longDownGo = false;
-  public boolean circleGo = false;
 
 
   @Override
   public void execute() {
-    slalom(); //THIS WASN'T HERE IT WASN'T UPDATING
+    double encoderClicksLeft = leftMotorEncoder.getPosition();
+    double encoderClicksRight = rightMotorEncoder.getPosition();
+    SmartDashboard.putNumber("Encoder for slalom left", encoderClicksLeft);
+    SmartDashboard.putNumber("Encoder for slalom Right", encoderClicksRight);
+    slalom(encoderClicksRight, encoderClicksLeft); //THIS WASN'T HERE IT WASN'T UPDATING
+    //driveSubsystem.drive.tankDrive(0.2,0.2); //test
   }
 
-  public void slalom(){
+  public void slalom(double encoderRight, double encoderLeft){
     //clicks stuff is rotations but I don't want to mess stuff up by changing
 
 
     //declares encoder objects to be passed into methods
-    double encoderClicksLeft = leftMotorEncoder.getPosition();
+    /*double encoderClicksLeft = leftMotorEncoder.getPosition();
     double encoderClicksRight = rightMotorEncoder.getPosition();
-
+    SmartDashboard.putNumber("Encoder for slalom left", encoderClicksLeft);
+    SmartDashboard.putNumber("Encoder for slalom Right", encoderClicksRight); */
     //calls each method passing in the encoders where needed
     
     if(circleGo == true){
-      slalomCircle(encoderClicksRight);
+      slalomCircle(encoderRight);
     }
     else if(longUpGo == true){
-      slalomLongSectionFirst(encoderClicksLeft);
+      slalomLongSectionFirst(encoderLeft);
     }
     else if(longDownGo == true){
-      slalomLongSectionSecond(encoderClicksLeft);
+      slalomLongSectionSecond(encoderLeft);
     }
     else if(enterGo == true){
-      slalomEnter(encoderClicksRight);
+      slalomEnter(encoderRight);
     }
     else if(exitGo == true){
-      slalomExit(encoderClicksRight);
+      slalomExit(encoderRight);
     }
   }
 
@@ -111,7 +117,7 @@ public class AutoNavCommand extends CommandBase{
 
     //turns until outer wheel travels the whole turn
     if (rightClicks < clicks){
-      driveSubsystem.drive.tankDrive(0.3, 0.57);
+      driveSubsystem.drive.tankDrive(0.5, 0.95);
     }
     else{
     //resets encoder click counts for next method
@@ -133,7 +139,7 @@ public class AutoNavCommand extends CommandBase{
 
     //turns until outer wheel travels the whole turn (speed will have to be adjusted for exact turn when we test)
     if(leftClicks < clicks){
-      driveSubsystem.drive.tankDrive(0.435, 0.3);
+      driveSubsystem.drive.tankDrive(0.725, 0.5);
     }
     else{
     //resets encoder click counts for next method
@@ -155,7 +161,7 @@ public class AutoNavCommand extends CommandBase{
 
     //turns until outer wheel travels the whole turn
     if(rightClicks < clicks){
-      driveSubsystem.drive.tankDrive(0.3, 0.57);
+      driveSubsystem.drive.tankDrive(0.5, 0.95);
     }
     else{
     //resets encoder click counts for next method
@@ -177,7 +183,7 @@ public class AutoNavCommand extends CommandBase{
 
     //turns until outer wheel travels the whole turn (speed will have to be adjusted for exact turn when we test)
     if(leftClicks < clicks){
-      driveSubsystem.drive.tankDrive(0.435, 0.3);
+      driveSubsystem.drive.tankDrive(0.725, 0.5);
     }
     else{
     //resets encoder click counts for next method
@@ -198,7 +204,7 @@ public class AutoNavCommand extends CommandBase{
 
     //turns until outer wheel travels the whole turn
     if (rightClicks < clicks){
-      driveSubsystem.drive.tankDrive(0.3, 0.57);
+      driveSubsystem.drive.tankDrive(0.5, 0.95);
     }
     else{
     //resets encoder click counts for next method

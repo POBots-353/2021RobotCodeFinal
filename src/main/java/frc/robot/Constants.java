@@ -40,7 +40,7 @@ public final class Constants {
 	public static int shooterMotorDeviceID = 8;
 	public static int climberMotorDeviceID = 5;
 	public static int hoodMotorDeviceID = 10; 
-	public static int preShooterDeviceID = 8; //new 
+	
 
 	//CANSparkMax Motor Speeds
 	public static double intakeMotorSpeed = 0.5;

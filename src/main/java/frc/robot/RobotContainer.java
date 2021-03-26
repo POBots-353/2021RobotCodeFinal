@@ -71,7 +71,7 @@ public class RobotContainer {
 
   // The robot's ultrasonic sensor is defined here
   // Initializes an nalogInput on port 0, and enables 2-bit averaging
-  public AnalogInput ultraSonic = new AnalogInput(1);
+  public AnalogInput ultraSonic = new AnalogInput(0);
 
   // Initializes an AnalogPotentiometer with the given AnalogInput
   // The full range of motion (in meaningful external units) is 0-180 (this could
@@ -178,15 +178,15 @@ public CANSparkMax conveyorMotor = new CANSparkMax(Constants.conveyorMotorDevice
 
     //keeping for now, not sure
       //delay
-    if (currentDistance <= 500 && choose < 1){//Red
-      intakeMotor.set(Constants.intakeMotorSpeed);
-      conveyorMotor.set(Constants.conveyorMotorSpeed);
+    /*if (currentDistance <= 500 && choose < 1){//Red
+      //intakeMotor.set(Constants.intakeMotorSpeed);
+      //conveyorMotor.set(Constants.conveyorMotorSpeed);
       choose = 1;
        return trajectory("output/RedA.wpilib.json");
     }
     else if(choose < 1){//Blue
-      intakeMotor.set(Constants.intakeMotorSpeed);
-      conveyorMotor.set(Constants.conveyorMotorSpeed);
+      //intakeMotor.set(Constants.intakeMotorSpeed);
+      //conveyorMotor.set(Constants.conveyorMotorSpeed);
       choose = 2;
       return trajectory("output/BlueA.wpilib.json");
     }
@@ -196,8 +196,8 @@ public CANSparkMax conveyorMotor = new CANSparkMax(Constants.conveyorMotorDevice
     }
     else if (choose == 2){
       return trajectory("output/BlueA.wpilib.json");
-    }
-    return null;
+    }*/
+    return autoNav;
     //pathweaver
     // Create a voltage constraint to ensure we don't accelerate too fast
 
