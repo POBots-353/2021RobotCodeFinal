@@ -3,6 +3,7 @@ package frc.robot.commands;
 //import edu.wpi.first.wpilibj.interfaces.Gyro;
 //import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants;
 import frc.robot.subsystems.DriveSubsystem;
 //import edu.wpi.first.wpilibj.GyroBase;
 //import edu.wpi.first.wpilibj.ADXRS450_Gyro;
@@ -73,7 +74,9 @@ public class AutoNavCommand extends CommandBase{
   }
 
   public void slalom(){
-    
+    //clicks stuff is rotations but I don't want to mess stuff up by changing
+
+
     //declares encoder objects to be passed into methods
     double encoderClicksLeft = leftMotorEncoder.getPosition();
     double encoderClicksRight = rightMotorEncoder.getPosition();
@@ -104,7 +107,7 @@ public class AutoNavCommand extends CommandBase{
     double theta = Math.PI/2;
     double radius = 57; //inner radius 30 in, outer 57 in (robot width 27 in)
     double outerLength = theta * radius;
-    double clicks = outerLength * 25;
+    double clicks = outerLength / Constants.wheelCircumference;
 
     //turns until outer wheel travels the whole turn
     if (rightClicks < clicks){
@@ -126,7 +129,7 @@ public class AutoNavCommand extends CommandBase{
     double theta = Math.PI;
     double radius = 87; //inner radius 60 in, outer 87 in
     double outerLength = theta * radius;
-    double clicks = outerLength * 25;
+    double clicks = outerLength / Constants.wheelCircumference;
 
     //turns until outer wheel travels the whole turn (speed will have to be adjusted for exact turn when we test)
     if(leftClicks < clicks){
@@ -148,7 +151,7 @@ public class AutoNavCommand extends CommandBase{
     double theta = 2 * Math.PI;
     double radius = 57; //inner radius 30 in, outer radius 57 in
     double outerLength = theta * radius;
-    double clicks = outerLength * 25;
+    double clicks = outerLength / Constants.wheelCircumference;
 
     //turns until outer wheel travels the whole turn
     if(rightClicks < clicks){

@@ -139,4 +139,6 @@ public final class Constants {
 	//public static final double goalHeight2 = 0; //placeholder 
 	public static final double robotHeight = 1.016; //placeholder
 	
+	public static final double wheelRadius = 3; //inches
+	public static final double wheelCircumference = 2 * Math.PI * wheelRadius;
 }
