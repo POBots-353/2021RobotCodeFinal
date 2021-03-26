@@ -52,9 +52,11 @@ public class BallTransitSubsystem extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
      boolean intakeBtn = RobotContainer.operatorStick.getRawButton(Constants.intakeButtonNumber); // was driverStick
+     boolean intakeBtnReleased = RobotContainer.operatorStick.getRawButtonReleased(Constants.intakeButtonNumber);
      boolean outtakeBtn = RobotContainer.operatorStick.getRawButton(Constants.outtakeButtonNumber); // was driverStick
-     boolean conveyorUpBtn = RobotContainer.operatorStick.getRawButton(Constants.conveyorUpButtonNumber); //getRawButton
-     boolean conveyorDownBtn = RobotContainer.operatorStick.getRawButton(Constants.conveyorUpButtonNumber); //getRawButton
+     boolean outtakeBtnReleased = RobotContainer.operatorStick.getRawButtonReleased(Constants.outtakeButtonNumber);
+     //boolean conveyorUpBtn = RobotContainer.operatorStick.getRawButton(Constants.conveyorUpButtonNumber); //getRawButton
+     //boolean conveyorDownBtn = RobotContainer.operatorStick.getRawButton(Constants.conveyorUpButtonNumber); //getRawButton
      boolean shootBtn = RobotContainer.operatorStick.getRawButton(Constants.shootButtonNumber); //3/16/2021 Changed to getRawButton to see if this was the issue ~NS
      //code written at 2 in the morning by NS so please review this
     
@@ -70,29 +72,35 @@ public class BallTransitSubsystem extends SubsystemBase {
       shooterMotor.set(0);
      // preShooterMotor.set(0); 
     }
-    
+    //Comment this out
     if(intakeBtn||outtakeBtn){
       runIntake(intakeBtn,outtakeBtn);
     }
-
-    //if(shootBtn){
-    //  runShooter(shootBtn);
-    //}
-    //Comment this out
-    /*if(conveyorUpBtn){ // these top 2 are simple conditional for if button for conveyor is pressed
-      conveyorMotor.set(Constants.conveyorMotorSpeed);
+    //to here
+    //Uncomment
+    /*if (intakeBtnReleased){
+      conveyorMotor.set(0);
+      intakeMotor.set(0);
+    }else if (outtakeBtnReleased){
+      conveyorMotor.set(0);
+      intakeMotor.set(0);
     }
-    else if(conveyorDownBtn){
+    else if (intakeBtn){
+      conveyorMotor.set(Constants.conveyorMotorSpeed);
+      intakeMotor.set(Constants.intakeMotorSpeed);
+    }else if (outtakeBtn){
       conveyorMotor.set(Constants.conveyorMotorSpeed*-1);
+      intakeMotor.set(-Constants.conveyorMotorSpeed);
+    }else{
+      conveyorMotor.set(0);
+      intakeMotor.set(0);
     }*/
-    //To here
-    //uncomment this
+    //comment this out
     if (intakeIn && intakeOut){
       conveyorMotor.set(0);
     }
     else if(intakeIn){ // these next three respond to global querries to run conveyor, could be ors but style
       conveyorMotor.set(Constants.conveyorMotorSpeed);
-      //preShooterMotor.set(Constants.conveyorMotorSpeed);
     }
     else if(intakeOut){
       conveyorMotor.set(Constants.conveyorMotorSpeed*-1);
@@ -112,14 +120,14 @@ public class BallTransitSubsystem extends SubsystemBase {
     double velocityNeed = Math.sqrt((9.81 * Math.pow(.6, 2)) / (Math.cos(60 * 60) * ((Constants.goalHeight1 - Constants.robotHeight) + .6 * Math.tan(60))));
     return velocityNeed/39.898;
   }
+  //RunIntake won't run anymore
+  //comment this out
   public void runIntake(boolean intakeBtn,  boolean outtakeBtn){
-    //Uncomment this
     if (intakeBtn && outtakeBtn){
       intakeMotor.set(0);
       intakeIn = false;
       intakeOut = false;
     }
-    //Uncomment this
     else if (intakeBtn == true){
       intakeMotor.set(Constants.intakeMotorSpeed);
       if(true){  //if(intakeSensor.get() == true){ // Removed for limit switch concerns on 2/29 ~CR
